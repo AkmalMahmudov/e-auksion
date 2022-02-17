@@ -3,9 +3,12 @@ package uz.akmal.e_auksion.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import uz.akmal.e_auksion.R
 import uz.akmal.e_auksion.databinding.ItemRecyclerBinding
+import uz.akmal.e_auksion.model.recyclerData.MainRvData
 
-class MainRecyclerAdapter(private val list: List<String>, private val width: Int) :
+class MainRecyclerAdapter(private val list: List<MainRvData>, private val width: Int) :
     RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>() {
 
     var itemClickListener: ((Int) -> Unit)? = null
@@ -21,9 +24,12 @@ class MainRecyclerAdapter(private val list: List<String>, private val width: Int
             binding.apply {
                 card.layoutParams.width = width
                 card.layoutParams.height = width
-                name.text = list[position]
+                name.text = list[position].name
+                Glide.with(root.context).load(list[position].url)
+                    .placeholder(R.drawable.image_placeholder).into(image)
             }
         }
+
         init {
             itemView.setOnClickListener {
                 itemClickListener?.invoke(absoluteAdapterPosition)

@@ -10,7 +10,7 @@ import uz.akmal.e_auksion.databinding.ItemLotRecycler2Binding
 import uz.akmal.e_auksion.model.data.response.allLots.ShortLotBean
 
 class LotRecycler2Adapter : RecyclerView.Adapter<LotRecycler2Adapter.ViewHolder>() {
-    private var currentData = emptyList<ShortLotBean>()
+    private var currentData = ArrayList<ShortLotBean>()
     var itemClickListener: ((Int) -> Unit)? = null
     fun itemClickListener(block: (Int) -> Unit) {
         itemClickListener = block
@@ -56,7 +56,7 @@ class LotRecycler2Adapter : RecyclerView.Adapter<LotRecycler2Adapter.ViewHolder>
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(newData: List<ShortLotBean>) {
-        currentData = newData
+        currentData.addAll(newData)
         notifyDataSetChanged()
     }
 }

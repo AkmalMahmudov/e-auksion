@@ -12,6 +12,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import uz.akmal.e_auksion.R
 import uz.akmal.e_auksion.databinding.FragmentMainBinding
+import uz.akmal.e_auksion.model.recyclerData.MainRvData
 import uz.akmal.e_auksion.ui.adapters.MainRecyclerAdapter
 import uz.akmal.e_auksion.ui.adapters.VPAdapter
 import uz.akmal.e_auksion.uitl.toPx
@@ -27,29 +28,91 @@ class MainScreen : Fragment(R.layout.fragment_main) {
         val adapterVP = VPAdapter(listOf("", "", "", ""))
         val adapterR = MainRecyclerAdapter(
             listOf(
-                "Davlat aktivlari",
-                "davlat mulkini ijaraga berish",
-                "Dehqon xo'jaligi yerlar ijarasi",
-                "Ko'chmas mulk",
-                "Avtotransport",
-                "Yer uchastkalari",
-                "Yer qari uchastkasidan foydalanish",
-                "Tashqi reklama obyeltlari",
-                "Daryolar o'zanlarini tozzalash",
-                "Ko'llar tizimi",
-                "Maxsus texnikalar",
-                "Buyurtmachi mulklari",
-                "Bankrotlik bo'yicha",
-                "Xududlarni tozalash",
-                "O'zpaxtasanoat AJ mol-mulklar",
-                "Boshqa mulklar",
-                "Radar va kamealar o'rnatish joylari",
-                "Statsionar shaxpbchalar o'rnatish",
-                "Havo kemalari",
-                "Ko'chmas savdo joylari",
-                "Jamoatchilik nazorat maskanlari"
-            ), width()
-        )
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=5",
+                    "Davlat aktivlari"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=11",
+                    "davlat mulkini ijaraga berish"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=24",
+                    "Dehqon xo'jaligi yerlar ijarasi"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=1",
+                    "Ko'chmas mulk"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=2",
+                    "Avtotransport"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=6",
+                    "Yer uchastkalari"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=10",
+                    "Yer qari uchastkasidan foydalanish"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=17",
+                    "Tashqi reklama obyeltlari"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=9",
+                    "Daryolar o'zanlarini tozzalash"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=12",
+                    "Ko'llar tizimi"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=3",
+                    "Maxsus texnikalar"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=14",
+                    "Buyurtmachi mulklari"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=15",
+                    "Bankrotlik bo'yicha"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=7",
+                    "Xududlarni tozalash"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=18",
+                    "O'zpaxtasanoat AJ mol-mulklar"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=4",
+                    "Boshqa mulklar"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=19",
+                    "Radar va kamealar o'rnatish joylari"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=20",
+                    "Statsionar shaxpbchalar o'rnatish"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=21",
+                    "Havo kemalari"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=23",
+                    "Ko'chmas savdo joylari"
+                ),
+                MainRvData(
+                    "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=25",
+                    "Jamoatchilik nazorat maskanlari"
+                )
+            ), width())
         binding.apply {
             viewPager.adapter = adapterVP
             dots.setViewPager2(viewPager)

@@ -13,7 +13,7 @@ class LotRecycler2Adapter :
     androidx.recyclerview.widget.ListAdapter<ShortLotBean, LotRecycler2Adapter.ViewHolder>(
         ShortLotBean.ITEM_CALLBACK
     ) {
-    private var currentData = emptyList<ShortLotBean>()
+//    private var currentData = emptyList<ShortLotBean>()
     var itemClickListener: ((Int) -> Unit)? = null
     fun itemClickListener(block: (Int) -> Unit) {
         itemClickListener = block
@@ -25,14 +25,14 @@ class LotRecycler2Adapter :
         fun bind(position: Int) {
             binding.apply {
                 val url =
-                    "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=${currentData[position].file_hash}&from_mobile=1"
+                    "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=${getItem(position).file_hash}&from_mobile=1"
                 Glide.with(root.context).load(url).centerCrop().into(image)
                 name.isSelected = true
                 name.movementMethod = ScrollingMovementMethod()
-                name.text = currentData[position].name
-                id.text = "№" + currentData[position].lot_number
-                zakalatPrice.text = currentData[position].zaklad_summa.toString() + " UZS"
-                boshlangichPrice.text = currentData[position].start_price.toString() + " UZS"
+                name.text = getItem(position).name
+                id.text = "№" + getItem(position).lot_number
+                zakalatPrice.text = getItem(position).zaklad_summa.toString() + " UZS"
+                boshlangichPrice.text = getItem(position).start_price.toString() + " UZS"
             }
         }
 
@@ -55,11 +55,11 @@ class LotRecycler2Adapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(position)
 
-    override fun getItemCount() = currentData.size
+//    override fun getItemCount() = currentData.size
 
-    @SuppressLint("NotifyDataSetChanged")
+    /*@SuppressLint("NotifyDataSetChanged")
     fun setData(newData: List<ShortLotBean>) {
         currentData = newData
         notifyDataSetChanged()
-    }
+    }*/
 }

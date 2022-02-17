@@ -1,5 +1,6 @@
 package uz.akmal.e_auksion.ui.screens
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -45,6 +46,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun observe() {
         viewModel.getAllLots.observe(viewLifecycleOwner) {
             when (it) {
@@ -58,8 +60,10 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     binding.progressBar.isVisible = false
                     val list = it.data as LotsResponse
                     Toast.makeText(context, list.result_msg, Toast.LENGTH_SHORT).show()
-                   val ls= adapter2.currentList.toMutableList()
+                    val ls = adapter2.currentList.toMutableList()
                     ls.addAll(list.shortLotBeans)
+                    adapter2.notifyDataSetChanged()
+                    adapter2.submitList(ls)
                 }
                 else -> {
                 }
@@ -77,7 +81,9 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 is CurrencyEvent.Success<*> -> {
                     binding.progressBar.isVisible = false
                     val list = it.data as LotsResponse
-                    adapter2.setData(list.shortLotBeans)
+                    val ls = adapter2.currentList.toMutableList()
+                    ls.addAll(list.shortLotBeans)
+                    adapter2.submitList(ls)
                 }
                 else -> {
                 }
@@ -146,7 +152,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                binding.sort.setSelection(0)
+//                binding.sort.setSelection(0)
             }
 
             override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -169,11 +175,11 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             super.onScrolled(recyclerView, dx, dy)
 
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-            if (currentPage == 0) {
+            if (currentPage == 0 && dy <= 0) {
                 viewModel.getAllLots(1)
                 currentPage++
             } else {
-                if (layoutManager.findLastVisibleItemPosition() >= currentPage*20-1) {
+                if (layoutManager.findLastVisibleItemPosition() >= currentPage * 20 - 1) {
                     viewModel.getAllLots(currentPage)
                     currentPage++
                 }

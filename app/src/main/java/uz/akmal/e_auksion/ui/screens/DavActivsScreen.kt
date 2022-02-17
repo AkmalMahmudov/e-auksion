@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +28,11 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
     private val navController by lazy { findNavController() }
     private lateinit var adapter1: LotRecycler1Adapter
     private lateinit var adapter2: LotRecycler2Adapter
+    private var currentPage = 0
+
+    companion object {
+        private const val QUERY_PAGE_SIZE = 20
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -91,6 +97,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             recycler1.adapter = adapter1
             recycler2.adapter = adapter2
+            recycler2.addOnScrollListener(this@DavActivsScreen.scrollListener)
         }
     }
 
@@ -153,6 +160,24 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         }
         adapter2.itemClickListener {
 
+        }
+    }
+
+    val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            if (currentPage == 0) {
+                viewModel.getAllLots(1)
+                currentPage++
+            } else {
+                if (layoutManager.findLastVisibleItemPosition() >= 19) {
+                    viewModel.getAllLots(currentPage)
+                    currentPage++
+                }
+
+            }
         }
     }
 }

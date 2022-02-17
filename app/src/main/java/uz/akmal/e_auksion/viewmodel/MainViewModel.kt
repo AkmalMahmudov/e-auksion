@@ -18,6 +18,8 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
     val getAllLots: LiveData<CurrencyEvent> get() = _getAllLots
     private var _getOrderByLots = MutableLiveData<CurrencyEvent>()
     val orderByLots: LiveData<CurrencyEvent> get() = _getOrderByLots
+    private var _getLotItem = MutableLiveData<CurrencyEvent>()
+    val getLotItem: LiveData<CurrencyEvent> get() = _getLotItem
 
     private var _getFiltersList = MutableLiveData<CurrencyEvent>()
     val filtersList: LiveData<CurrencyEvent> get() = _getFiltersList
@@ -70,6 +72,15 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
             _getAreasList.postValue(CurrencyEvent.Loading)
             viewModelScope.launch {
                 _getAreasList.value = repository.getFiltersList()
+            }
+        }
+    }
+    fun getLotItem(lot_id:String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            _getLotItem.postValue(CurrencyEvent.Loading)
+            viewModelScope.launch {
+                _getLotItem.value = repository.getLotItem(lot_id)
+
             }
         }
     }

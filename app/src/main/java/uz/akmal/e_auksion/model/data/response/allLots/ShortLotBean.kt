@@ -20,7 +20,7 @@ data class ShortLotBean(
         val ITEM_CALLBACK=object : DiffUtil.ItemCallback<ShortLotBean>(){
             override fun areItemsTheSame(oldItem: ShortLotBean, newItem: ShortLotBean)=oldItem.id==newItem.id
 
-            override fun areContentsTheSame(oldItem: ShortLotBean, newItem: ShortLotBean)=oldItem.name==newItem.name
+            override fun areContentsTheSame(oldItem: ShortLotBean, newItem: ShortLotBean)=oldItem.name==newItem.name && oldItem.lot_number==newItem.lot_number
         }
     }
 }

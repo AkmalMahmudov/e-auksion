@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
         CoroutineScope(Dispatchers.IO).launch {
             _getOrderByLots.postValue(CurrencyEvent.Loading)
             viewModelScope.launch {
-                _getOrderByLots.value = repository.getOrderByLots(orderby_, order_type, 1)
+                _getOrderByLots.value = repository.getOrderByLots(orderby_, order_type, page)
             }
         }
     }

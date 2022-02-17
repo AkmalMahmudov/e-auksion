@@ -34,7 +34,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         clickReceiver()
         //pagination ishlatilganda har scroll qilganingda pag++
 
-        viewModel.getAllLots(5)
+        viewModel.getAllLots(1)
         observe()
 
     }
@@ -69,8 +69,6 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 is CurrencyEvent.Success<*> -> {
                     binding.progressBar.isVisible = false
                     val list = it.data as LotsResponse
-//                            Toast.makeText(context, list.result_msg, Toast.LENGTH_SHORT).show()
-                    Toast.makeText(context, list.shortLotBeans[0].name, Toast.LENGTH_SHORT).show()
                     adapter2.setData(list.shortLotBeans)
                 }
                 else -> {

@@ -9,8 +9,11 @@ import com.bumptech.glide.Glide
 import uz.akmal.e_auksion.databinding.ItemLotRecycler2Binding
 import uz.akmal.e_auksion.model.data.response.allLots.ShortLotBean
 
-class LotRecycler2Adapter : RecyclerView.Adapter<LotRecycler2Adapter.ViewHolder>() {
-    private var currentData = ArrayList<ShortLotBean>()
+class LotRecycler2Adapter :
+    androidx.recyclerview.widget.ListAdapter<ShortLotBean, LotRecycler2Adapter.ViewHolder>(
+        ShortLotBean.ITEM_CALLBACK
+    ) {
+    private var currentData = emptyList<ShortLotBean>()
     var itemClickListener: ((Int) -> Unit)? = null
     fun itemClickListener(block: (Int) -> Unit) {
         itemClickListener = block
@@ -56,7 +59,7 @@ class LotRecycler2Adapter : RecyclerView.Adapter<LotRecycler2Adapter.ViewHolder>
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(newData: List<ShortLotBean>) {
-        currentData.addAll(newData)
+        currentData = newData
         notifyDataSetChanged()
     }
 }

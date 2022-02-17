@@ -58,7 +58,8 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     binding.progressBar.isVisible = false
                     val list = it.data as LotsResponse
                     Toast.makeText(context, list.result_msg, Toast.LENGTH_SHORT).show()
-                    adapter2.setData(list.shortLotBeans)
+                   val ls= adapter2.currentList.toMutableList()
+                    ls.addAll(list.shortLotBeans)
                 }
                 else -> {
                 }
@@ -172,7 +173,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 viewModel.getAllLots(1)
                 currentPage++
             } else {
-                if (layoutManager.findLastVisibleItemPosition() >= 19) {
+                if (layoutManager.findLastVisibleItemPosition() >= currentPage*20-1) {
                     viewModel.getAllLots(currentPage)
                     currentPage++
                 }

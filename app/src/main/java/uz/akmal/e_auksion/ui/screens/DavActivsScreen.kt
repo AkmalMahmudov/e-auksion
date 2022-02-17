@@ -59,6 +59,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             }
         }
         viewModel.orderByLots.observe(viewLifecycleOwner) {
+
             when (it) {
                 is CurrencyEvent.Failure -> {
                     Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
@@ -69,12 +70,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 is CurrencyEvent.Success<*> -> {
                     binding.progressBar.isVisible = false
                     val list = it.data as LotsResponse
-                    if (list.shortLotBeans.isNullOrEmpty()) {
-                        adapter2.setData(emptyList())
-                        Toast.makeText(requireContext(), "${list.result_code}", Toast.LENGTH_SHORT)
-                            .show()
-                    } else
-                        adapter2.setData(list.shortLotBeans)
+                    adapter2.setData(list.shortLotBeans)
                 }
                 else -> {
                 }
@@ -102,7 +98,6 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         binding.sort.onItemSelectedListener = object : AdapterView.OnItemClickListener,
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                // viewModelga p2 position yuboriladi filtrlash uchun
                 var orderby_: String = ""
                 var order_type: String = ""
                 when (p2) {
@@ -123,19 +118,19 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                         order_type = "1"
                     }
                     4 -> {
-                        orderby_ = "start_area"
+                        orderby_ = "land_area"
                         order_type = "0"
                     }
                     5 -> {
-                        orderby_ = "start_area"
+                        orderby_ = "land_area"
                         order_type = "1"
                     }
                     6 -> {
-                        orderby_ = "start_count"
+                        orderby_ = "view_count"
                         order_type = "0"
                     }
                     7 -> {
-                        orderby_ = "start_count"
+                        orderby_ = "view_count"
                         order_type = "1"
                     }
                 }

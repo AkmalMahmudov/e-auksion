@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Mahmudov/Desktop/eauksion/app/src/main/res/layout/fragment_dav_activs.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Mahmudov/Desktop/eauksion/app/src/main/res/layout/fragment_filter.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Mahmudov/Desktop/eauksion/app/src/main/res/layout/item_lot_recycler2.xml" value="0.22" />
+        <entry key="..\:/Users/Mahmudov/Desktop/eauksion/app/src/main/res/layout/item_spinner.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">e-auksion</string>
+    <string name="yuklanmoqda">Loading…</string>
+    <string name="todo">TODO</string>
+    <string name="tartiblash">Tartiblash</string>
+
+    <string-array name="davlat_aktivlari">
+        <item>Davlat aktivlari</item>
+        <item>Davlat mulkini ijaraga berish</item>
+        <item>Dehqon xo\'jaligi yerlar ijarasi</item>
+        <item>Ko\'chmas mulk</item>
+        <item>Avtomototransport</item>
+        <item>Yer uchastkalari</item>
+        <item>Yer qari uchastkasidan foydalanish huquqi</item>
+        <item>Tashqi reklama obyektlari</item>
+        <item>Daryolar o\'zanlarini tozalash</item>
+        <item>Ko\'llar tizimi</item>
+        <item>Maxsus texnikalar</item>
+        <item>Buyurtmachilar mulklari</item>
+        <item>Bankrotlik bo\'yicha</item>
+        <item>Hududlarni tozalash</item>
+        <item>O\'zpaxtasanoat AJ</item>
+        <item>Boshqa mol mulklar</item>
+        <item>Radar va kameralar o\'rnatish joylari</item>
+        <item>Statsionar shahobchalar o\'rnatish</item>
+        <item>Havo kemalari</item>
+        <item>Ko\'chmas savdo joylari</item>
+        <item>Jamoatchilik nazorat maskanlari</item>
+    </string-array>
+
+    <string-array name="Mol_mulk_toifasi">
+        <item>Mol Mulk toifasi</item>
+    </string-array>
+
+    <string-array name="viloyat">
+        <item>Viloyat</item>
+    </string-array>
+
+    <string-array name="tuman">
+        <item>Tuman</item>
+    </string-array>
+
+    <string-array name="sort">
+        <item>Yangilaridan boshlab</item>
+        <item>Eskilaridan boshlab</item>
+        <item>Qimmatidan boshlab</item>
+        <item>Arzonidan boshlab</item>
+        <item>Maydoni kattasidan</item>
+        <item>Maydoni kichigidan</item>
+        <item>Ko\'p ko\'rilgan</item>
+        <item>Kam ko\'rilgan</item>
+    </string-array>
+
+</resources>

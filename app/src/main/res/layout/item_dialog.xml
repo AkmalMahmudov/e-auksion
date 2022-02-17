@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tartiblash"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioButton
+        android:id="@+id/r1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <TextView
+        style="@style/dialog_text_style"
+        android:text="Yangilardan boshlab"
+        app:layout_constraintBottom_toBottomOf="@id/r1"
+        app:layout_constraintLeft_toRightOf="@id/r1"
+        app:layout_constraintTop_toTopOf="@id/r1" />
+
+    <RadioButton
+        android:id="@+id/r2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/r1" />
+
+    <TextView
+        style="@style/dialog_text_style"
+        android:text="Eskilardan boshlab"
+        app:layout_constraintBottom_toBottomOf="@id/r2"
+        app:layout_constraintLeft_toRightOf="@id/r2"
+        app:layout_constraintTop_toTopOf="@id/r2" />
+
+    <RadioButton
+        android:id="@+id/r3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/r2" />
+
+    <TextView
+        style="@style/dialog_text_style"
+        android:text="Qimmatidan boshlab"
+        app:layout_constraintBottom_toBottomOf="@id/r3"
+        app:layout_constraintLeft_toRightOf="@id/r3"
+        app:layout_constraintTop_toTopOf="@id/r3" />
+
+    <RadioButton
+        android:id="@+id/r4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/r3" />
+
+    <TextView
+        style="@style/dialog_text_style"
+        android:text="Arzonidan boshlab"
+        app:layout_constraintBottom_toBottomOf="@id/r4"
+        app:layout_constraintLeft_toRightOf="@id/r4"
+        app:layout_constraintTop_toTopOf="@id/r4" />
+
+    <RadioButton
+        android:id="@+id/r5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/r4" />
+
+    <TextView
+        style="@style/dialog_text_style"
+        android:text="Maydoni kattasidan"
+        app:layout_constraintBottom_toBottomOf="@id/r5"
+        app:layout_constraintLeft_toRightOf="@id/r5"
+        app:layout_constraintTop_toTopOf="@id/r5" />
+
+    <RadioButton
+        android:id="@+id/r6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/r5" />
+
+    <TextView
+        style="@style/dialog_text_style"
+        android:text="MAydoni kichigidan"
+        app:layout_constraintBottom_toBottomOf="@id/r6"
+        app:layout_constraintLeft_toRightOf="@id/r6"
+        app:layout_constraintTop_toTopOf="@id/r6" />
+
+    <RadioButton
+        android:id="@+id/r7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/r6" />
+
+    <TextView
+        style="@style/dialog_text_style"
+        android:text="Ko'p ko'rilganlar"
+        app:layout_constraintBottom_toBottomOf="@id/r7"
+        app:layout_constraintLeft_toRightOf="@id/r7"
+        app:layout_constraintTop_toTopOf="@id/r7" />
+
+    <RadioButton
+        android:id="@+id/r8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/r7" />
+
+    <TextView
+        style="@style/dialog_text_style"
+        android:text="Kam ko'rilganlar"
+        app:layout_constraintBottom_toBottomOf="@id/r8"
+        app:layout_constraintLeft_toRightOf="@id/r8"
+        app:layout_constraintTop_toTopOf="@id/r8" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ok"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/r8" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        android:text="cancel"
+        app:layout_constraintRight_toLeftOf="@id/ok"
+        app:layout_constraintTop_toBottomOf="@id/r8" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

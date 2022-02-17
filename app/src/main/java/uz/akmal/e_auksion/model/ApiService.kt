@@ -18,5 +18,4 @@ interface ApiService {
 
     @POST("mobile")
     suspend fun getOrderByLots(@Body dataOrderByRequest: OrderByRequest): Response<LotsResponse>
-
 }

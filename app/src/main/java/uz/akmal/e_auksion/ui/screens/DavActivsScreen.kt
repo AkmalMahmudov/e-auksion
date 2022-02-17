@@ -35,6 +35,11 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         //pagination ishlatilganda har scroll qilganingda pag++
 
         viewModel.getAllLots(5)
+        observe()
+
+    }
+
+    private fun observe() {
         viewModel.getAllLots.observe(viewLifecycleOwner) {
             when (it) {
                 is CurrencyEvent.Failure -> {
@@ -53,7 +58,25 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 }
             }
         }
-
+        viewModel.orderByLots.observe(viewLifecycleOwner) {
+            when (it) {
+                is CurrencyEvent.Failure -> {
+                    Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
+                }
+                is CurrencyEvent.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                is CurrencyEvent.Success<*> -> {
+                    binding.progressBar.isVisible = false
+                    val list = it.data as LotsResponse
+//                            Toast.makeText(context, list.result_msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, list.shortLotBeans[0].name, Toast.LENGTH_SHORT).show()
+                    adapter2.setData(list.shortLotBeans)
+                }
+                else -> {
+                }
+            }
+        }
     }
 
     private fun loadViews() {
@@ -114,25 +137,6 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     }
                 }
                 viewModel.orderBy(orderby_, order_type, 1)
-                viewModel.orderByLots.observe(viewLifecycleOwner) {
-                    when (it) {
-                        is CurrencyEvent.Failure -> {
-                            Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
-                        }
-                        is CurrencyEvent.Loading -> {
-                            binding.progressBar.isVisible = true
-                        }
-                        is CurrencyEvent.Success<*> -> {
-                            binding.progressBar.isVisible = false
-                            val list = it.data as LotsResponse
-//                            Toast.makeText(context, list.result_msg, Toast.LENGTH_SHORT).show()
-                            Toast.makeText(context, list.shortLotBeans[0].name, Toast.LENGTH_SHORT).show()
-                            adapter2.setData(list.shortLotBeans)
-                        }
-                        else -> {
-                        }
-                    }
-                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {

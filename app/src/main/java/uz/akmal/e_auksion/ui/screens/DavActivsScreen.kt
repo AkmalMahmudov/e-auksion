@@ -2,6 +2,7 @@ package uz.akmal.e_auksion.ui.screens
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -29,15 +30,15 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
     private val navController by lazy { findNavController() }
     private lateinit var adapter1: LotRecycler1Adapter
     private lateinit var adapter2: LotRecycler2Adapter
-    private var currentPage = 0
+    private var currentPage = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadViews()
-        clickReceiver()
 
         viewModel.getAllLots(1)
         observe()
+        clickReceiver()
 
     }
 
@@ -143,19 +144,23 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                         order_type = "1"
                     }
                 }
-                currentPage=0
+                adapter2.submitList(emptyList())
+                viewModel.orderBy(orderby_, order_type, 1)
+                currentPage = 1
                 val scrollListener = object : RecyclerView.OnScrollListener() {
 
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
 
                         val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                        if (currentPage == 0 && dy <= 0) {
-                            viewModel.orderBy(orderby_,order_type,1)
+                        if (currentPage == 1 && dy <= 0) {
+                            viewModel.orderBy(orderby_, order_type, currentPage)
+                            Log.d("aaatty", "$currentPage")
                             currentPage++
                         } else {
                             if (layoutManager.findLastVisibleItemPosition() >= currentPage * 20 - 1) {
-                                viewModel.orderBy(orderby_,order_type,currentPage)
+                                viewModel.orderBy(orderby_, order_type, currentPage)
+                                Log.d("aaatty", "$currentPage")
                                 currentPage++
                             }
 
@@ -163,9 +168,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     }
                 }
                 binding.recycler2.addOnScrollListener(scrollListener)
-
-                viewModel.orderBy(orderby_, order_type, 1)
-            }
+           }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                binding.sort.setSelection(0)
@@ -182,28 +185,27 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
 
         }
         adapter2.itemClickListener {
-navController.navigate(DavActivsScreenDirections.openItemScreen(it))
+            navController.navigate(DavActivsScreenDirections.openItemScreen(it))
         }
     }
 
 
     private val scrollListener = object : RecyclerView.OnScrollListener() {
-
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-            if (currentPage == 0 && dy <= 0) {
-                viewModel.getAllLots(1)
+            if (currentPage == 1 && dy <= 0) {
+                Log.d("aaatt", "$currentPage")
+                viewModel.getAllLots(currentPage)
                 currentPage++
             } else {
                 if (layoutManager.findLastVisibleItemPosition() >= currentPage * 20 - 1) {
+                    Log.d("aaatt", "$currentPage")
                     viewModel.getAllLots(currentPage)
                     currentPage++
                 }
-
             }
         }
     }
-
 }

@@ -31,15 +31,10 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
     private lateinit var adapter2: LotRecycler2Adapter
     private var currentPage = 0
 
-    companion object {
-        private const val QUERY_PAGE_SIZE = 20
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadViews()
         clickReceiver()
-        //pagination ishlatilganda har scroll qilganingda pag++
 
         viewModel.getAllLots(1)
         observe()
@@ -187,7 +182,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
 
         }
         adapter2.itemClickListener {
-
+navController.navigate(DavActivsScreenDirections.openItemScreen(it))
         }
     }
 

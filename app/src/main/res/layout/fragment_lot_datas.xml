@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/grey"
     android:theme="@style/Theme.Design.Light">
 
@@ -50,9 +50,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,11 +100,13 @@
 
                     <TextView
                         android:id="@+id/lot_name"
-                        android:layout_width="200dp"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:text="Angren avtobus taksi saroyi mchj"
                         android:textColor="#000"
-                        android:textSize="18sp"
+                        app:layout_constraintRight_toLeftOf="@id/lot_number"
+                        app:layout_constraintStart_toEndOf="@id/lot_number"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,18 +114,20 @@
                         android:id="@+id/lot_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_marginStart="1dp"
+                        android:background="@drawable/corner_grey"
                         android:clickable="false"
                         android:padding="10dp"
-                        android:paddingEnd="25dp"
                         android:paddingStart="25dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/corner_grey"
+                        android:paddingEnd="25dp"
                         android:text="№1221445"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@id/lot_name"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/lot_name"
                         app:layout_constraintTop_toTopOf="@id/lot_name" />
 
                     <LinearLayout
@@ -135,7 +139,7 @@
                         android:background="#CAC9C9"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/lot_number" />
+                        app:layout_constraintTop_toBottomOf="@id/lot_name" />
 
                     <TextView
                         android:id="@+id/text_count"
@@ -150,13 +154,14 @@
 
                     <TextView
                         android:id="@+id/start_cost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="127dp"
+                        android:layout_height="27dp"
                         android:layout_marginTop="15dp"
                         android:text="Boshlang'ich narxi"
                         android:textColor="#676666"
                         android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="@id/lot_number"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/text_count"
                         app:layout_constraintTop_toBottomOf="@id/line" />
 
                     <TextView
@@ -176,24 +181,27 @@
                         android:text="297584000.0 uzs"
                         android:textColor="#000"
                         android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="@id/lot_number"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/start_cost"
                         app:layout_constraintTop_toBottomOf="@id/start_cost" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:id="@+id/linear"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintEnd_toEndOf="@id/viewPager"
                 app:layout_constraintStart_toStartOf="@id/viewPager"
                 app:layout_constraintTop_toBottomOf="@id/cardView">
 
                 <LinearLayout
                     android:id="@+id/icon_auksion"
-                    android:layout_width="130dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/corner"
                     app:layout_constraintStart_toStartOf="@id/cardView"
                     app:layout_constraintTop_toBottomOf="@id/cardView">
@@ -209,6 +217,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
                         android:text="Auksion"
                         android:textColor="#000"
@@ -244,6 +253,7 @@
                         app:tint="@color/black" />
 
                     <TextView
+                        android:id="@+id/is_favourite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -271,6 +281,7 @@
                         app:tint="@color/black" />
 
                     <TextView
+                        android:id="@+id/favourite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -298,6 +309,7 @@
                         app:tint="@color/black" />
 
                     <TextView
+                        android:id="@+id/view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -329,6 +341,7 @@
                     app:tint="@color/black" />
 
                 <TextView
+                    android:id="@+id/category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -337,12 +350,13 @@
                     android:textColor="#000"
                     android:textSize="15sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/line3"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="2dp"
                 android:layout_margin="15dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:background="#CAC9C9"
                 android:orientation="horizontal"
@@ -418,7 +432,7 @@
                         app:layout_constraintTop_toBottomOf="@id/title" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/text_day"
                         android:layout_width="50dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="10dp"
@@ -433,7 +447,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/day" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/text_hour"
                         android:layout_width="50dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="10dp"
@@ -448,7 +462,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/day" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/text_minut"
                         android:layout_width="50dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="10dp"
@@ -463,7 +477,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/day" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/text_second"
                         android:layout_width="50dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="10dp"
@@ -481,31 +495,31 @@
                         android:layout_width="30dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_dots"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                        app:layout_constraintEnd_toStartOf="@+id/textView"
-                        app:layout_constraintStart_toEndOf="@+id/textView2"
-                        app:layout_constraintTop_toTopOf="@+id/textView2"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_day"
+                        app:layout_constraintEnd_toStartOf="@+id/text_hour"
+                        app:layout_constraintStart_toEndOf="@+id/text_day"
+                        app:layout_constraintTop_toTopOf="@+id/text_day"
                         app:tint="#858484" />
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_dots"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                        app:layout_constraintEnd_toStartOf="@+id/textView3"
-                        app:layout_constraintStart_toEndOf="@+id/textView"
-                        app:layout_constraintTop_toTopOf="@+id/textView2"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_day"
+                        app:layout_constraintEnd_toStartOf="@+id/text_minut"
+                        app:layout_constraintStart_toEndOf="@+id/text_hour"
+                        app:layout_constraintTop_toTopOf="@+id/text_day"
                         app:tint="#858484" />
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_dots"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_day"
 
-                        app:layout_constraintEnd_toStartOf="@+id/textView4"
-                        app:layout_constraintStart_toEndOf="@+id/textView3"
-                        app:layout_constraintTop_toTopOf="@+id/textView2"
+                        app:layout_constraintEnd_toStartOf="@+id/text_second"
+                        app:layout_constraintStart_toEndOf="@+id/text_minut"
+                        app:layout_constraintTop_toTopOf="@+id/text_day"
                         app:tint="#858484" />
 
                     <TextView
@@ -521,7 +535,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/date"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textView" />
+                        app:layout_constraintTop_toBottomOf="@id/text_hour" />
 
                     <TextView
                         android:id="@+id/date"
@@ -534,7 +548,7 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView5"
-                        app:layout_constraintTop_toBottomOf="@id/textView" />
+                        app:layout_constraintTop_toBottomOf="@id/text_hour" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -544,8 +558,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:paddingBottom="10dp"
                 android:background="@drawable/corner"
+                android:paddingBottom="10dp"
                 app:layout_constraintEnd_toEndOf="@id/time_card"
                 app:layout_constraintStart_toStartOf="@id/time_card"
                 app:layout_constraintTop_toBottomOf="@id/time_card">
@@ -562,13 +576,15 @@
 
                 <TextView
                     android:id="@+id/time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="Auksion 18.03.2022 kuni 10:00dan 18:00gacha"
                     android:textColor="@color/black"
                     android:textSize="12sp"
+                    android:layout_marginEnd="10dp"
                     android:textStyle="bold"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/clock"
                     app:layout_constraintTop_toTopOf="@id/clock" />
@@ -587,12 +603,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/address_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/address_card"
                 android:background="@drawable/corner"
+                android:paddingBottom="10dp"
                 app:layout_constraintEnd_toEndOf="@id/time_card"
                 app:layout_constraintStart_toStartOf="@id/time_card"
                 app:layout_constraintTop_toBottomOf="@id/auksion_time">
@@ -609,9 +625,10 @@
 
                 <TextView
                     android:id="@+id/address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:layout_marginEnd="10dp"
                     android:text="Toshkent viloyati, Angren shahri, Ohangaron ko'chasi 3-uy "
                     android:textColor="@color/black"
                     android:textSize="12sp"
@@ -632,12 +649,13 @@
                     app:layout_constraintTop_toBottomOf="@id/title_address"
                     app:tint="@color/black" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <LinearLayout
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="2dp"
                 android:layout_margin="15dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:background="#CAC9C9"
                 android:orientation="horizontal"
@@ -645,25 +663,19 @@
                 app:layout_constraintStart_toStartOf="@id/address_card"
                 app:layout_constraintTop_toBottomOf="@id/address_card" />
 
-            <ExpandableListView
-                android:id="@+id/expandableListView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@null"
-                android:layout_marginBottom="15dp"
-                android:paddingBottom="15dp"
-                android:dividerHeight="1dp"
-                android:layout_margin="15dp"
-
-                android:groupIndicator="@null"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line2"
-                tools:listitem="@layout/item_exp" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

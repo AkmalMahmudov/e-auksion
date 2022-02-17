@@ -14,8 +14,8 @@ class LotRecycler2Adapter :
         ShortLotBean.ITEM_CALLBACK
     ) {
 //    private var currentData = emptyList<ShortLotBean>()
-    var itemClickListener: ((Int) -> Unit)? = null
-    fun itemClickListener(block: (Int) -> Unit) {
+    var itemClickListener: ((String) -> Unit)? = null
+    fun itemClickListener(block: (String) -> Unit) {
         itemClickListener = block
     }
 
@@ -38,7 +38,7 @@ class LotRecycler2Adapter :
 
         init {
             itemView.setOnClickListener {
-                itemClickListener?.invoke(absoluteAdapterPosition)
+                itemClickListener?.invoke(getItem(absoluteAdapterPosition).lot_number)
             }
         }
     }

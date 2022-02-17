@@ -41,7 +41,11 @@
         android:id="@+id/itemScreen"
         android:name="uz.akmal.e_auksion.ui.screens.ItemScreen"
         android:label="ItemScreen"
-        tools:layout="@layout/fragment_item"/>
+        tools:layout="@layout/fragment_lot_datas">
+        <argument
+            android:name="lot_id"
+            app:argType="string"/>
+    </fragment>
     <fragment
         android:id="@+id/filterScreen"
         android:name="uz.akmal.e_auksion.ui.screens.FilterScreen"

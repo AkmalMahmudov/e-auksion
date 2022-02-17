@@ -1,10 +1,7 @@
 package uz.akmal.e_auksion.model
 
 import android.util.Log
-import uz.akmal.e_auksion.model.data.request.AllLotsRequest
-import uz.akmal.e_auksion.model.data.request.OrderByMap
-import uz.akmal.e_auksion.model.data.request.OrderByRequest
-import uz.akmal.e_auksion.model.data.request.SimpleDataRequest
+import uz.akmal.e_auksion.model.data.request.*
 import uz.akmal.e_auksion.uitl.CurrencyEvent
 import javax.inject.Inject
 
@@ -47,6 +44,36 @@ class MainRepository @Inject constructor(private val api: ApiService) {
             val response = api.getOrderByLots(request)
             val result = response.body()
             Log.d("TTT", "response: ${result?.shortLotBeans} : $order_type")
+            if (response.isSuccessful && result != null) {
+                CurrencyEvent.Success(result)
+            } else {
+                CurrencyEvent.Failure(response.message())
+            }
+        } catch (e: Exception) {
+            CurrencyEvent.Failure(e.message ?: "error")
+        }
+    }
+
+    suspend fun getFiltersList(): CurrencyEvent {
+        val request = FiltersListRequest(7, 0, "uz", "1.3.5")
+        return try {
+            val response = api.getFiltersList(request)
+            val result = response.body()
+            if (response.isSuccessful && result != null) {
+                CurrencyEvent.Success(result)
+            } else {
+                CurrencyEvent.Failure(response.message())
+            }
+        } catch (e: Exception) {
+            CurrencyEvent.Failure(e.message ?: "error")
+        }
+    }
+
+    suspend fun getCategoriesList(groupNumber: Int): CurrencyEvent {
+        val request = FiltersRequest(5, "1", FiltersMap(groupNumber), 0, "uz", "1.3.5")
+        return try {
+            val response = api.getFilterById(request)
+            val result = response.body()
             if (response.isSuccessful && result != null) {
                 CurrencyEvent.Success(result)
             } else {

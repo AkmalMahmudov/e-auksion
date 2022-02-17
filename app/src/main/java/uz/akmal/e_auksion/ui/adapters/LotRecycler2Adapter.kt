@@ -27,8 +27,8 @@ class LotRecycler2Adapter :
                 val url =
                     "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=${getItem(position).file_hash}&from_mobile=1"
                 Glide.with(root.context).load(url).centerCrop().into(image)
-                name.isSelected = true
-                name.movementMethod = ScrollingMovementMethod()
+//                name.isSelected = true
+//                name.movementMethod = ScrollingMovementMethod()
                 name.text = getItem(position).name
                 id.text = "№" + getItem(position).lot_number
                 zakalatPrice.text = getItem(position).zaklad_summa.toString() + " UZS"

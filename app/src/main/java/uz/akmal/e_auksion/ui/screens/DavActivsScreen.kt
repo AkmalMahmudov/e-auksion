@@ -148,6 +148,27 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                         order_type = "1"
                     }
                 }
+                currentPage=0
+                val scrollListener = object : RecyclerView.OnScrollListener() {
+
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+
+                        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                        if (currentPage == 0 && dy <= 0) {
+                            viewModel.orderBy(orderby_,order_type,1)
+                            currentPage++
+                        } else {
+                            if (layoutManager.findLastVisibleItemPosition() >= currentPage * 20 - 1) {
+                                viewModel.orderBy(orderby_,order_type,currentPage)
+                                currentPage++
+                            }
+
+                        }
+                    }
+                }
+                binding.recycler2.addOnScrollListener(scrollListener)
+
                 viewModel.orderBy(orderby_, order_type, 1)
             }
 
@@ -170,7 +191,9 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         }
     }
 
+
     private val scrollListener = object : RecyclerView.OnScrollListener() {
+
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
@@ -187,4 +210,5 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             }
         }
     }
+
 }

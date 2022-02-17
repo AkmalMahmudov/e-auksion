@@ -19,6 +19,11 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
     private var _getOrderByLots = MutableLiveData<CurrencyEvent>()
     val orderByLots: LiveData<CurrencyEvent> get() = _getOrderByLots
 
+    private var _getFiltersList = MutableLiveData<CurrencyEvent>()
+    val filtersList: LiveData<CurrencyEvent> get() = _getFiltersList
+
+    private var _getCategoriesList = MutableLiveData<CurrencyEvent>()
+    val categoriesList: LiveData<CurrencyEvent> get() = _getCategoriesList
 
     fun getAllLots(page: Int) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -44,6 +49,24 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
             viewModelScope.launch {
                 _getOrderByLots.value = repository.getOrderByLots(orderby_, order_type, page)
 
+            }
+        }
+    }
+
+    fun filtersList() {
+        CoroutineScope(Dispatchers.IO).launch {
+            _getFiltersList.postValue(CurrencyEvent.Loading)
+            viewModelScope.launch {
+                _getFiltersList.value = repository.getFiltersList()
+            }
+        }
+    }
+
+    fun getCategories(groupNumber: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            _getCategoriesList.postValue(CurrencyEvent.Loading)
+            viewModelScope.launch {
+                _getCategoriesList.value = repository.getCategoriesList(groupNumber)
             }
         }
     }

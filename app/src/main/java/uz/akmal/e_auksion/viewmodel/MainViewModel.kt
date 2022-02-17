@@ -43,6 +43,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
             _getOrderByLots.postValue(CurrencyEvent.Loading)
             viewModelScope.launch {
                 _getOrderByLots.value = repository.getOrderByLots(orderby_, order_type, page)
+
             }
         }
     }

@@ -69,7 +69,12 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 is CurrencyEvent.Success<*> -> {
                     binding.progressBar.isVisible = false
                     val list = it.data as LotsResponse
-                    adapter2.setData(list.shortLotBeans)
+                    if (list.shortLotBeans.isNullOrEmpty()) {
+                        adapter2.setData(emptyList())
+                        Toast.makeText(requireContext(), "${list.result_code}", Toast.LENGTH_SHORT)
+                            .show()
+                    } else
+                        adapter2.setData(list.shortLotBeans)
                 }
                 else -> {
                 }

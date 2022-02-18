@@ -27,21 +27,18 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
     private var _getCategoriesList = MutableLiveData<CurrencyEvent>()
     val categoriesList: LiveData<CurrencyEvent> get() = _getCategoriesList
 
+    private var _getAreasList = MutableLiveData<CurrencyEvent>()
+    val areasList: LiveData<CurrencyEvent> get() = _getAreasList
+
+    private var _getFiltered = MutableLiveData<CurrencyEvent>()
+    val filteredList: LiveData<CurrencyEvent> get() = _getFiltered
+
     fun getAllLots(page: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             _getAllLots.postValue(CurrencyEvent.Loading)
             viewModelScope.launch {
                 _getAllLots.value = repository.getFullLots(page)
             }
-
-            /*is CurrencyEvent.Failure->_getLots.postValue(CurrencyEvent.Failure("An error occurred. Please check the connection "/*data.message!!*/))
-
-            is CurrencyEvent.Success<*> -> {
-                CoroutineScope(Dispatchers.Default).launch {
-                    _getLots.postValue(CurrencyEvent.Success(data))
-                }
-            }*/
-
         }
     }
 
@@ -64,20 +61,39 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
         }
     }
 
-    fun getCategories(groupNumber: Int) {
+    fun getCategories() {
         CoroutineScope(Dispatchers.IO).launch {
             _getCategoriesList.postValue(CurrencyEvent.Loading)
             viewModelScope.launch {
-                _getCategoriesList.value = repository.getCategoriesList(groupNumber)
+                _getCategoriesList.value = repository.getFiltersList()
             }
         }
     }
-    fun getLotItem(lot_id:String) {
+
+    fun getAreas() {
+        CoroutineScope(Dispatchers.IO).launch {
+            _getAreasList.postValue(CurrencyEvent.Loading)
+            viewModelScope.launch {
+                _getAreasList.value = repository.getFiltersList()
+            }
+        }
+    }
+
+    fun getLotItem(lot_id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             _getLotItem.postValue(CurrencyEvent.Loading)
             viewModelScope.launch {
                 _getLotItem.value = repository.getLotItem(lot_id)
+            }
+        }
+    }
 
+    fun sortByFilter(value: ArrayList<Int?>) {
+        CoroutineScope(Dispatchers.IO).launch {
+
+            _getFiltered.postValue(CurrencyEvent.Loading)
+            viewModelScope.launch {
+                _getFiltered.value = repository.getFiltered(value)
             }
         }
     }

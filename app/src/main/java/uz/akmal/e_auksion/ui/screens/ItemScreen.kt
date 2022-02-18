@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -25,7 +26,8 @@ class ItemScreen : Fragment(R.layout.fragment_lot_datas) {
     private val binding by viewBinding(FragmentLotDatasBinding::bind)
     private val viewModel: MainViewModel by viewModels()
     private val navArgs: ItemScreenArgs by navArgs()
-//    private val navController by lazy { findNavController() }
+
+    //    private val navController by lazy { findNavController() }
     private lateinit var countDownTimer: CountDownTimer
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,6 +38,10 @@ class ItemScreen : Fragment(R.layout.fragment_lot_datas) {
 
     @SuppressLint("SetTextI18n")
     private fun observe() {
+        binding.menu.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         viewModel.getLotItem.observe(viewLifecycleOwner) {
             when (it) {
                 is CurrencyEvent.Failure -> {
@@ -96,17 +102,17 @@ class ItemScreen : Fragment(R.layout.fragment_lot_datas) {
 
                 val elapsedSeconds = diff / secondsInMilli
 
-                binding.textDay.text =elapsedDays.toString()
-                binding.textHour.text =elapsedHours.toString()
-                binding.textMinut.text =elapsedMinutes.toString()
-                binding.textSecond.text =elapsedSeconds.toString()
+                binding.textDay.text = elapsedDays.toString()
+                binding.textHour.text = elapsedHours.toString()
+                binding.textMinut.text = elapsedMinutes.toString()
+                binding.textSecond.text = elapsedSeconds.toString()
             }
 
             override fun onFinish() {
-                binding.textDay.text ="0"
-                binding.textHour.text ="0"
-                binding.textMinut.text ="0"
-                binding.textSecond.text ="0"
+                binding.textDay.text = "0"
+                binding.textHour.text = "0"
+                binding.textMinut.text = "0"
+                binding.textSecond.text = "0"
             }
         }.start()
     }

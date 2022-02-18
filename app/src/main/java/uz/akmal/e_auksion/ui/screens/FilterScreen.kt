@@ -21,11 +21,10 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
     private val binding by viewBinding(FragmentFilterBinding::bind)
     private val navController by lazy { findNavController() }
     private val viewModel: MainViewModel by viewModels()
-    var groupNumber: Int = 0
+    var groupNumber = 0
     var categoryNumber = 0
     var regionNumber = 0
     var areaNumber = 0
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,130 +45,153 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
                 is CurrencyEvent.Success<*> -> {
                     val list = it.data as FiltersListResponse
                     val groups = ArrayList<String>()
-                    val categories = ArrayList<String>()
                     val regions = ArrayList<String>()
-                    val areas = ArrayList<String>()
 
+                    groups.add("Mulk guruhlari")
+                    regions.add("Viloyat")
                     for (group in list.groups) {
                         groups.add(group.name)
-                    }
-                    for (category in list.categories) {
-                        if (category.confiscant_groups_id == groupNumber) {
-                            categories.add(category.name)
-                        }
                     }
                     for (region in list.regions) {
                         regions.add(region.name)
                     }
-                    for (area in list.areas) {
-                        if (area.regions_id == groupNumber) {
-                            areas.add(area.name)
-                        }
-                    }
                     val groupAdapter = ArrayAdapter(
                         requireContext(), R.layout.item_spinner, groups
-                    )
-                    val categoryAdapter = ArrayAdapter(
-                        requireContext(), R.layout.item_spinner, categories
                     )
                     val regionAdapter =
                         ArrayAdapter(requireContext(), R.layout.item_spinner, regions)
 
-                    val areaAdapter =
-                        ArrayAdapter(requireContext(), R.layout.item_spinner, areas)
                     binding.apply {
                         this.groups.adapter = groupAdapter
-                        category.adapter = categoryAdapter
                         region.adapter = regionAdapter
-                        area.adapter = areaAdapter
-
-                        this.groups.setSelection(groupNumber)
-                        category.setSelection(categoryNumber)
-                        region.setSelection(regionNumber)
-                        area.setSelection(areaNumber)
                     }
                 }
                 else -> {
                 }
             }
         }
-        /*   viewModel.categoriesList.observe(viewLifecycleOwner) {
-               when (it) {
-                   is CurrencyEvent.Failure -> {
-                       Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
-                   }
-                   is CurrencyEvent.Loading -> {
-                   }
-                   is CurrencyEvent.Success<*> -> {
-                       val list = it.data as FiltersListResponse
-
-                       val areas = ArrayList<String>()
-   //                    val groups = ArrayList<String>()
-   //                    val regions = ArrayList<String>()
-
-                       for (area in list.areas) {
-                           areas.add(group.name)
-                       }
-                       for (region in list.regions) {
-                           regions.add(region.name)
-                       }
-                       val groupAdapter = ArrayAdapter(
-                           requireContext(),
-                           R.layout.item_spinner,
-                           groups
-                       )
-                       val categoryAdapter =
-                           ArrayAdapter(requireContext(), R.layout.item_spinner, regions)
-                       binding.groups.adapter = groupAdapter
-                       binding.groups.setSelection(-1)
-                       binding.region.adapter = categoryAdapter
-                       binding.region.setSelection(-1)
-                   }
-                   else -> {
-                   }
-               }
-
-           }
-       */
+        viewModel.categoriesList.observe(viewLifecycleOwner) {
+            when (it) {
+                is CurrencyEvent.Failure -> {
+                    Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
+                }
+                is CurrencyEvent.Loading -> {
+                }
+                is CurrencyEvent.Success<*> -> {
+                    val list = it.data as FiltersListResponse
+                    val categories = ArrayList<String>()
+                    categories.add("Mol-mulk toifasi")
+                    list.categories.forEach {
+                        if (it.confiscant_groups_id == groupNumber) {
+                            categories.add(it.name)
+                        }
+                    }
+                    val categoryAdapter =
+                        ArrayAdapter(requireContext(), R.layout.item_spinner, categories)
+                    binding.category.adapter = categoryAdapter
+                    categoryAdapter.setDropDownViewResource(R.layout.item_spinner)
+                }
+                else -> {}
+            }
+        }
+        viewModel.areasList.observe(viewLifecycleOwner) {
+            when (it) {
+                is CurrencyEvent.Failure -> {
+                    Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
+                }
+                is CurrencyEvent.Loading -> {
+                }
+                is CurrencyEvent.Success<*> -> {
+                    val list = it.data as FiltersListResponse
+                    val areas = ArrayList<String>()
+                    areas.add("Tumanlar")
+                    list.areas.forEach {
+                        if (it.regions_id == regionNumber) {
+                            areas.add(it.name)
+                        }
+                    }
+                    val areaAdapter =
+                        ArrayAdapter(requireContext(), R.layout.item_spinner, areas)
+                    binding.area.adapter = areaAdapter
+                    areaAdapter.setDropDownViewResource(R.layout.item_spinner)
+                }
+                else -> {}
+            }
+        }
     }
 
     private fun clickReceiver() {
-
         binding.apply {
             back.setOnClickListener {
                 navController.navigateUp()
             }
             tozalash.setOnClickListener {
-                groups.setSelection(-1)
-                category.setSelection(-1)
-                region.setSelection(-1)
-                area.setSelection(-1)
+                groups.setSelection(0)
+                category.setSelection(0)
+                region.setSelection(0)
+                area.setSelection(0)
             }
             izlash.setOnClickListener {
-                //viewModelga yuboriladi
-            }
-        }
+                val value = ArrayList<Int?>()
+                value.add(groupNumber)
+                value.add(categoryNumber)
+                value.add(regionNumber)
+                value.add(areaNumber)
 
-        binding.groups.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                groupNumber = p2
-//                viewModel.filtersList()
-////                viewModel.getCategories(p2)
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-
-        binding.region.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                regionNumber = p2
-//                viewModel.filtersList()
+                for (i in 0..3) {
+                    if (value[i] == 0) {
+                        value[i] = null
+                    }
+                }
+                viewModel.sortByFilter(value)
+                navController.navigateUp()
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+            groups.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    viewModel.getCategories()
+                    if (p2 != 0) {
+                        groupNumber = p2
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
             }
 
+            category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    if (p2 != 0) {
+                        categoryNumber = p2
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+            }
+
+            region.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    viewModel.getAreas()
+                    if (p2 != 0) {
+                        regionNumber = p2
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+            }
+
+            area.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    if (p2 != 0) {
+                        areaNumber = p2
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+            }
         }
     }
 }

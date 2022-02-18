@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -27,7 +26,6 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
     var regionNumber = 0
     var areaNumber = 0
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.filtersList()
@@ -49,6 +47,8 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
                     val groups = ArrayList<String>()
                     val regions = ArrayList<String>()
 
+                    groups.add("Mulk guruhlari")
+                    regions.add("Viloyat")
                     for (group in list.groups) {
                         groups.add(group.name)
                     }
@@ -64,8 +64,6 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
                     binding.apply {
                         this.groups.adapter = groupAdapter
                         region.adapter = regionAdapter
-                        this.groups.setSelection(groupNumber)
-                        region.setSelection(regionNumber)
                     }
                 }
                 else -> {
@@ -82,14 +80,16 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
                 is CurrencyEvent.Success<*> -> {
                     val list = it.data as FiltersListResponse
                     val categories = ArrayList<String>()
+                    categories.add("Mol-mulk toifasi")
                     list.categories.forEach {
-                        if (it.confiscant_groups_id == groupNumber + 1) {
+                        if (it.confiscant_groups_id == groupNumber) {
                             categories.add(it.name)
                         }
                     }
                     val categoryAdapter =
                         ArrayAdapter(requireContext(), R.layout.item_spinner, categories)
                     binding.category.adapter = categoryAdapter
+                    categoryAdapter.setDropDownViewResource(R.layout.item_spinner)
                 }
                 else -> {}
             }
@@ -104,14 +104,16 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
                 is CurrencyEvent.Success<*> -> {
                     val list = it.data as FiltersListResponse
                     val areas = ArrayList<String>()
+                    areas.add("Tumanlar")
                     list.areas.forEach {
-                        if (it.regions_id == regionNumber + 1) {
+                        if (it.regions_id == regionNumber) {
                             areas.add(it.name)
                         }
                     }
                     val areaAdapter =
                         ArrayAdapter(requireContext(), R.layout.item_spinner, areas)
                     binding.area.adapter = areaAdapter
+                    areaAdapter.setDropDownViewResource(R.layout.item_spinner)
                 }
                 else -> {}
             }
@@ -119,62 +121,76 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
     }
 
     private fun clickReceiver() {
-
         binding.apply {
             back.setOnClickListener {
                 navController.navigateUp()
             }
             tozalash.setOnClickListener {
-                groups.setSelection(-1)
-                category.setSelection(-1)
-                region.setSelection(-1)
-                area.setSelection(-1)
+                groups.setSelection(0)
+                category.setSelection(0)
+                region.setSelection(0)
+                area.setSelection(0)
             }
             izlash.setOnClickListener {
-                //viewModelga yuboriladi
-                Toast.makeText(
-                    requireContext(), "${groups.selectedItemPosition}", Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
+                val value = ArrayList<Int?>()
+                value.add(groupNumber)
+                value.add(categoryNumber)
+                value.add(regionNumber)
+                value.add(areaNumber)
 
-        binding.groups.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                groupNumber = p2
-                viewModel.getCategories()
-                binding.category.setSelection(-1)
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-
-        binding.category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                categoryNumber = p2
+                for (i in 0..3) {
+                    if (value[i] == 0) {
+                        value[i] = null
+                    }
+                }
+                viewModel.sortByFilter(value)
+                navController.navigateUp()
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+            groups.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    viewModel.getCategories()
+                    if (p2 != 0) {
+                        groupNumber = p2
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
             }
 
-        }
+            category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    if (p2 != 0) {
+                        categoryNumber = p2
+                    }
+                }
 
-        binding.region.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                regionNumber = p2
-                viewModel.getAreas()
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
+            region.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    viewModel.getAreas()
+                    if (p2 != 0) {
+                        regionNumber = p2
+                    }
+                }
 
-        binding.area.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                areaNumber = p2
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+            area.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    if (p2 != 0) {
+                        areaNumber = p2
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
             }
         }
     }

@@ -5,14 +5,11 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import uz.akmal.e_auksion.model.data.request.*
 import uz.akmal.e_auksion.model.data.response.LotItemResponse
-import uz.akmal.e_auksion.model.data.response.SimpleDataResponse
 import uz.akmal.e_auksion.model.data.response.allLots.LotsResponse
 import uz.akmal.e_auksion.model.data.response.filters.FiltersResponse
 import uz.akmal.e_auksion.model.data.response.filtersList.FiltersListResponse
 
 interface ApiService {
-    @POST("mobile")
-    suspend fun getLots(@Body data: SimpleDataRequest): Response<SimpleDataResponse>
 
     @POST("mobile")
     suspend fun getAllLots(@Body datAllLotsRequest: AllLotsRequest): Response<LotsResponse>
@@ -28,4 +25,7 @@ interface ApiService {
 
     @POST("mobile")
     suspend fun getLotItem(@Body lotItemRequest: LotItemRequest): Response<LotItemResponse>
+
+    @POST("mobile")
+    suspend fun getFiltered(@Body dataFiltersRequest: FiltersRequest): Response<FiltersResponse>
 }

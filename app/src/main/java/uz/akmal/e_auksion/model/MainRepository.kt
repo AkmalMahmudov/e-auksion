@@ -6,20 +6,6 @@ import uz.akmal.e_auksion.uitl.CurrencyEvent
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val api: ApiService) {
-    suspend fun getAllLots(page: Int): CurrencyEvent {
-        val request = SimpleDataRequest(5, 0, "uz", page, "1.3.5")
-        return try {
-            val response = api.getLots(request)
-            val result = response.body()
-            if (response.isSuccessful && result != null) {
-                CurrencyEvent.Success(result)
-            } else {
-                CurrencyEvent.Failure(response.message())
-            }
-        } catch (e: Exception) {
-            CurrencyEvent.Failure(e.message ?: "error")
-        }
-    }
 
     suspend fun getFullLots(page: Int): CurrencyEvent {
         val request = AllLotsRequest(5, page.toString(), 0, "uz", "1.3.5")
@@ -35,6 +21,7 @@ class MainRepository @Inject constructor(private val api: ApiService) {
             CurrencyEvent.Failure(e.message ?: "error")
         }
     }
+
     suspend fun getLotItem(lot_id: String): CurrencyEvent {
         val request = LotItemRequest(lot_id = lot_id)
         return try {
@@ -83,10 +70,14 @@ class MainRepository @Inject constructor(private val api: ApiService) {
         }
     }
 
-    suspend fun getCategoriesList(groupNumber: Int): CurrencyEvent {
-        val request = FiltersRequest(5, "1", FiltersMap(groupNumber), 0, "uz", "1.3.5")
+    suspend fun getFiltered(value: ArrayList<Int?>): CurrencyEvent {
+        val request = FiltersRequest(
+            5, "1",
+            FiltersMap(null, null, null, 2),
+            0, "uz", "1.3.5"
+        )
         return try {
-            val response = api.getFilterById(request)
+            val response = api.getFiltered(request)
             val result = response.body()
             if (response.isSuccessful && result != null) {
                 CurrencyEvent.Success(result)

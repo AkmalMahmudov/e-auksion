@@ -70,14 +70,13 @@ class MainRepository @Inject constructor(private val api: ApiService) {
         }
     }
 
-    suspend fun getFiltered(value: ArrayList<Int?>): CurrencyEvent {
+    suspend fun getFiltered(map:Map<String, String>, page:Int): CurrencyEvent {
         val request = FiltersRequest(
-            5, "1",
-            FiltersMap(null, null, null, 2),
+            5, "1",map,
             0, "uz", "1.3.5"
         )
         return try {
-            val response = api.getFiltered(request)
+            val response = api.getFiltered( request)
             val result = response.body()
             Log.d("AABB", result?.shortLotBeans?.get(1)?.name.toString())
             if (response.isSuccessful && result != null) {

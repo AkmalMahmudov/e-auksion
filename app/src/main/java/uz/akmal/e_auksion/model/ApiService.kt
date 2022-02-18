@@ -3,6 +3,7 @@ package uz.akmal.e_auksion.model
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.QueryMap
 import uz.akmal.e_auksion.model.data.request.*
 import uz.akmal.e_auksion.model.data.response.LotItemResponse
 import uz.akmal.e_auksion.model.data.response.allLots.LotsResponse
@@ -27,5 +28,6 @@ interface ApiService {
     suspend fun getLotItem(@Body lotItemRequest: LotItemRequest): Response<LotItemResponse>
 
     @POST("mobile")
-    suspend fun getFiltered(@Body dataFiltersRequest: FiltersRequest): Response<FiltersResponse>
+    suspend fun getFiltered (@Body body:FiltersRequest): Response<FiltersResponse>
 }
+//(@QueryMap params: Map<String, String>,

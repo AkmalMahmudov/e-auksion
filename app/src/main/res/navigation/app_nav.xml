@@ -25,6 +25,26 @@
         <action
             android:id="@+id/open_filterScreen"
             app:destination="@id/filterScreen" />
+        <argument
+            android:name="is_filter"
+            android:defaultValue="false"
+            app:argType="boolean"/>
+        <argument
+            android:name="group"
+            android:defaultValue="-1"
+            app:argType="integer"/>
+        <argument
+            android:name="category"
+            android:defaultValue="-1"
+            app:argType="integer"/>
+        <argument
+            android:name="region"
+            android:defaultValue="-1"
+            app:argType="integer"/>
+        <argument
+            android:name="area"
+            android:defaultValue="-1"
+            app:argType="integer"/>
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -50,5 +70,9 @@
         android:id="@+id/filterScreen"
         android:name="uz.akmal.e_auksion.ui.screens.FilterScreen"
         android:label="FilterScreen"
-        tools:layout="@layout/fragment_filter"/>
+        tools:layout="@layout/fragment_filter">
+        <action
+            android:id="@+id/action_filterScreen_to_davActivsScreen"
+            app:destination="@id/davActivsScreen" />
+    </fragment>
 </navigation>

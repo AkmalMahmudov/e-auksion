@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.akmal.e_auksion.R
 import uz.akmal.e_auksion.databinding.FragmentDavActivsBinding
 import uz.akmal.e_auksion.model.data.response.allLots.LotsResponse
+import uz.akmal.e_auksion.model.data.response.filters.FiltersResponse
 import uz.akmal.e_auksion.ui.adapters.LotRecycler1Adapter
 import uz.akmal.e_auksion.ui.adapters.LotRecycler2Adapter
 import uz.akmal.e_auksion.uitl.CurrencyEvent
@@ -31,16 +33,59 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
     private lateinit var adapter1: LotRecycler1Adapter
     private lateinit var adapter2: LotRecycler2Adapter
     private lateinit var adapter3: LotRecycler2Adapter
+    private val navArgs: DavActivsScreenArgs by navArgs()
     private var currentPage = 1
-   private var currentPage2 = 1
+    private var currentPage2 = 1
+    private var currentPage3 = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadViews()
         clickReceiver()
 
-        viewModel.getAllLots(1)
+
+
         menu()
+        if (navArgs.isFilter) {
+            adapter2.submitList(emptyList())
+            val map = mutableMapOf<String, String>()
+            if (navArgs.group != 0) {
+                map["confiscant_groups_id"] = "${navArgs.group}"
+            }
+            if (navArgs.category != 0) {
+                map["confiscant_categories_id"] = "${navArgs.category}"
+            }
+            if (navArgs.region != 0) {
+                map["regions_id"] = "${navArgs.region}"
+            }
+            if (navArgs.area != 0) {
+                map["areas_id"] = "${navArgs.region}"
+            }
+
+
+            viewModel.sortByFilter(map, currentPage3)
+            val scrollListener = object : RecyclerView.OnScrollListener() {
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    if (currentPage3 == 1 && dy <= 0) {
+                        viewModel.sortByFilter(map, currentPage3)
+                        currentPage3++
+                    } else {
+                        if (layoutManager.findLastVisibleItemPosition() >= currentPage3 * 20 - 1) {
+                            viewModel.sortByFilter(map, currentPage3)
+                            currentPage3++
+                            Log.d("mkm", "onScrolled: $currentPage3 ")
+                        }
+                    }
+                }
+            }
+            binding.recycler2.addOnScrollListener(scrollListener)
+        }else{
+            viewModel.getAllLots(1)
+        }
         observe()
 
     }
@@ -57,75 +102,75 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 when (it.itemId) {
                     R.id.yangi -> {
                         t = true
-                        currentPage2=1
+                        currentPage2 = 1
                         orderby_ = "start_time"
                         order_type = "0"
-                        load(order_type,orderby_)
+                        load(order_type, orderby_)
                         adapter3.submitList(emptyList())
                         viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.eski -> {
                         t = true
-                        currentPage2=1
+                        currentPage2 = 1
                         orderby_ = "start_time"
                         order_type = "1"
-                        load(order_type,orderby_)
+                        load(order_type, orderby_)
                         adapter3.submitList(emptyList())
                         viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.qimmat -> {
                         t = true
-                        currentPage2=1
+                        currentPage2 = 1
                         orderby_ = "start_price"
                         order_type = "0"
-                        load(order_type,orderby_)
+                        load(order_type, orderby_)
                         adapter3.submitList(emptyList())
                         viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.arzon -> {
                         t = true
-                        currentPage2=1
+                        currentPage2 = 1
                         orderby_ = "start_price"
                         order_type = "1"
-                        load(order_type,orderby_)
+                        load(order_type, orderby_)
                         adapter3.submitList(emptyList())
                         viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.katta -> {
                         t = true
-                        currentPage2=1
+                        currentPage2 = 1
                         orderby_ = "land_area"
                         order_type = "0"
-                        load(order_type,orderby_)
+                        load(order_type, orderby_)
                         adapter3.submitList(emptyList())
                         viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.kichik -> {
                         t = true
-                        currentPage2=1
+                        currentPage2 = 1
                         orderby_ = "land_area"
                         order_type = "1"
-                        load(order_type,orderby_)
+                        load(order_type, orderby_)
                         adapter3.submitList(emptyList())
                         viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.kup -> {
                         t = true
-                        currentPage2=1
+                        currentPage2 = 1
                         orderby_ = "view_count"
                         order_type = "0"
                         viewModel.orderBy(orderby_, order_type, 1)
                         adapter3.submitList(emptyList())
-                        load(order_type,orderby_)
+                        load(order_type, orderby_)
                     }
                     R.id.kam -> {
                         t = true
-                        currentPage2=1
+                        currentPage2 = 1
                         orderby_ = "view_count"
                         order_type = "1"
                         viewModel.orderBy(orderby_, order_type, 1)
                         adapter3.submitList(emptyList())
-                        load(order_type,orderby_)
+                        load(order_type, orderby_)
                     }
                 }
                 t = true
@@ -136,9 +181,9 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
 //        adapter3.submitList(emptyList())
 
 
-
     }
-    private fun load (order_type:String, orderby_:String) {
+
+    private fun load(order_type: String, orderby_: String) {
 
         val scrollListener1 = object : RecyclerView.OnScrollListener() {
 
@@ -150,17 +195,17 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
 //                    viewModel.orderBy(orderby_, order_type, 1)
 //                    currentPage2++
 //                } else {
-                    if (layoutManager.findLastVisibleItemPosition() >= currentPage2 * 20 -2 ) {
-                        viewModel.orderBy(orderby_, order_type, currentPage2)
-                        Log.d("mkm1", "onScrolled: $currentPage2 ")
-                        currentPage2++
-                    }
+                if (layoutManager.findLastVisibleItemPosition() >= currentPage2 * 20 - 2) {
+                    viewModel.orderBy(orderby_, order_type, currentPage2)
+                    Log.d("mkm1", "onScrolled: $currentPage2 ")
+                    currentPage2++
+                }
 
 //                }
             }
         }
-        binding.recycler2.visibility=View.GONE
-        binding.recycler3.visibility=View.VISIBLE
+        binding.recycler2.visibility = View.GONE
+        binding.recycler3.visibility = View.VISIBLE
         binding.recycler3.addOnScrollListener(scrollListener1)
     }
 
@@ -202,6 +247,26 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     val ls = adapter3.currentList.toMutableList()
                     ls.addAll(list.shortLotBeans)
                     adapter3.submitList(ls)
+                }
+                else -> {
+                }
+            }
+        }
+        viewModel.filteredList.observe(viewLifecycleOwner) {
+
+            when (it) {
+                is CurrencyEvent.Failure -> {
+                    Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
+                }
+                is CurrencyEvent.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                is CurrencyEvent.Success<*> -> {
+                    binding.progressBar.isVisible = false
+                    val list = it.data as FiltersResponse
+                    val ls = adapter2.currentList.toMutableList()
+                    ls.addAll(list.shortLotBeans)
+                    adapter2.submitList(ls)
                 }
                 else -> {
                 }

@@ -29,7 +29,7 @@ class ItemScreen : Fragment(R.layout.fragment_lot_datas) {
     private val navArgs: ItemScreenArgs by navArgs()
     private lateinit var adaterVP: VPAdapter
 
-    //    private val navController by lazy { findNavController() }
+    private val navController by lazy { findNavController() }
     private lateinit var countDownTimer: CountDownTimer
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +40,11 @@ class ItemScreen : Fragment(R.layout.fragment_lot_datas) {
             dots.setViewPager2(viewPager)
             viewPager.offscreenPageLimit = 3
         }
-
+        binding.apply {
+            menu.setOnClickListener {
+                navController.navigateUp()
+            }
+        }
         viewModel.getLotItem(navArgs.lotId)
         observe()
     }

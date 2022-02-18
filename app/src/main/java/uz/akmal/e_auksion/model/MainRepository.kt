@@ -70,7 +70,7 @@ class MainRepository @Inject constructor(private val api: ApiService) {
         }
     }
 
-    suspend fun getFiltered(map:Map<String, String>, page:Int): CurrencyEvent {
+    suspend fun  getFiltered(map:Map<String, String>, page:Int): CurrencyEvent {
         val request = FiltersRequest(
             5, "1",map,
             0, "uz", "1.3.5"

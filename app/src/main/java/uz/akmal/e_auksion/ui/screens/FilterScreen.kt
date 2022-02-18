@@ -1,6 +1,7 @@
 package uz.akmal.e_auksion.ui.screens
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -130,34 +131,33 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
                 category.setSelection(0)
                 region.setSelection(0)
                 area.setSelection(0)
+                groupNumber=0
+                categoryNumber=0
+                regionNumber=0
+                areaNumber=0
             }
             izlash.setOnClickListener {
-//                val value = ArrayList<Int?>()
-//                value.add(groupNumber)
-//                value.add(categoryNumber)
-//                value.add(regionNumber)
-//                value.add(areaNumber)
                 val map = mutableMapOf<String, String>()
-                if (groupNumber!=0){
+                if (groupNumber != 0) {
                     map["confiscant_groups_id"] = "$groupNumber"
                 }
-                if (areaNumber!=0){
-                    map["areas_id"] = "$areaNumber"
-                }
-                if (categoryNumber!=0){
+                if (categoryNumber != 0) {
                     map["confiscant_categories_id"] = "$categoryNumber"
                 }
-                if (regionNumber!=0){
+                if (regionNumber != 0) {
                     map["regions_id"] = "$regionNumber"
                 }
-//                    for (i in 0..3) {
-//                        if (value[i] != 0) {
-//                            mapOf<String, String>()
-//                        }
-//                    }
-                val page=1
+                    if (areaNumber != 0) {
+                        map["areas_id"] = "$areaNumber"
+                    }
+
+                val page = 1
                 viewModel.sortByFilter(map, page)
-//                navController.navigateUp()
+                Log.d(
+                    "map",
+                    "clickReceiver: map ${map["regions_id"]} ${map["confiscant_categories_id"]} ${map["areas_id"]} ${map["confiscant_groups_id"]}"
+                )
+                navController.navigate(FilterScreenDirections.actionFilterScreenToDavActivsScreen(true,groupNumber,categoryNumber,regionNumber, areaNumber))
             }
 
             groups.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

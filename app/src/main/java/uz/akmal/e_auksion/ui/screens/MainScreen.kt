@@ -25,7 +25,14 @@ class MainScreen : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapterVP = VPAdapter(listOf("", "", "", ""))
+        val adapterVP = VPAdapter(
+            listOf(
+                "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=13e827bc5966e7419495d7ce4530547a8b058fb2",
+                "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=5b8ae0b97376b52ede4cf3abbfeef5c5c0d653b2",
+                "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=393bb25ba9c8c14685900a206ded9f72cefa63a5",
+                "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=43d1bd01f427b052d2e45208eae6a4b25905d4b5"
+            )
+        )
         val adapterR = MainRecyclerAdapter(
             listOf(
                 MainRvData(
@@ -112,7 +119,8 @@ class MainScreen : Fragment(R.layout.fragment_main) {
                     "https://files.e-auksion.uz/files-worker/api/v1/group-icon?cgroup_id=25",
                     "Jamoatchilik nazorat maskanlari"
                 )
-            ), width())
+            ), width()
+        )
         binding.apply {
             viewPager.adapter = adapterVP
             dots.setViewPager2(viewPager)

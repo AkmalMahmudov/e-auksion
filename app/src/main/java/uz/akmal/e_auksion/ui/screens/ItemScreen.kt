@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.akmal.e_auksion.R
 import uz.akmal.e_auksion.databinding.FragmentLotDatasBinding
 import uz.akmal.e_auksion.model.data.response.LotItemResponse
+import uz.akmal.e_auksion.ui.adapters.VPAdapter
 import uz.akmal.e_auksion.uitl.CurrencyEvent
 import uz.akmal.e_auksion.viewmodel.MainViewModel
 import java.text.SimpleDateFormat
@@ -26,12 +27,20 @@ class ItemScreen : Fragment(R.layout.fragment_lot_datas) {
     private val binding by viewBinding(FragmentLotDatasBinding::bind)
     private val viewModel: MainViewModel by viewModels()
     private val navArgs: ItemScreenArgs by navArgs()
+    private lateinit var adaterVP: VPAdapter
 
     //    private val navController by lazy { findNavController() }
     private lateinit var countDownTimer: CountDownTimer
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val adapterVP = VPAdapter(listOf("url"))
+        binding.apply {
+            viewPager.adapter = adapterVP
+            dots.setViewPager2(viewPager)
+            viewPager.offscreenPageLimit = 3
+        }
+
         viewModel.getLotItem(navArgs.lotId)
         observe()
     }
@@ -67,6 +76,18 @@ class ItemScreen : Fragment(R.layout.fragment_lot_datas) {
                         time.text = "Auksion ${item.start_time}dan ${item.end_time}gacha"
                         address.text = item.joylashgan_manzil
                         printDifferenceDateForHours(item.order_end_time)
+
+                        adaterVP =
+                            VPAdapter(
+                                listOf(
+                                    "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=" + item.file_hash,
+                                    "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=" + item.file_hash
+                                )
+                            )
+                        viewPager.adapter = adaterVP
+                        dots.setViewPager2(viewPager)
+                        viewPager.offscreenPageLimit = 3
+
                     }
                 }
                 else -> {

@@ -132,19 +132,32 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
                 area.setSelection(0)
             }
             izlash.setOnClickListener {
-                val value = ArrayList<Int?>()
-                value.add(groupNumber)
-                value.add(categoryNumber)
-                value.add(regionNumber)
-                value.add(areaNumber)
-
-                for (i in 0..3) {
-                    if (value[i] == 0) {
-                        value[i] = null
-                    }
+//                val value = ArrayList<Int?>()
+//                value.add(groupNumber)
+//                value.add(categoryNumber)
+//                value.add(regionNumber)
+//                value.add(areaNumber)
+                val map = mutableMapOf<String, String>()
+                if (groupNumber!=0){
+                    map["confiscant_groups_id"] = "$groupNumber"
                 }
-                viewModel.sortByFilter(value)
-                navController.navigateUp()
+                if (areaNumber!=0){
+                    map["areas_id"] = "$areaNumber"
+                }
+                if (categoryNumber!=0){
+                    map["confiscant_categories_id"] = "$categoryNumber"
+                }
+                if (regionNumber!=0){
+                    map["regions_id"] = "$regionNumber"
+                }
+//                    for (i in 0..3) {
+//                        if (value[i] != 0) {
+//                            mapOf<String, String>()
+//                        }
+//                    }
+                val page=1
+                viewModel.sortByFilter(map, page)
+//                navController.navigateUp()
             }
 
             groups.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

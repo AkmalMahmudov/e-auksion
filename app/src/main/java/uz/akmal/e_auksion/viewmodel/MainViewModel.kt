@@ -88,12 +88,12 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
         }
     }
 
-    fun sortByFilter(value: ArrayList<Int?>) {
+    fun sortByFilter(map:Map<String, String>, page:Int) {
         CoroutineScope(Dispatchers.IO).launch {
 
             _getFiltered.postValue(CurrencyEvent.Loading)
             viewModelScope.launch {
-                _getFiltered.value = repository.getFiltered(value)
+                _getFiltered.value = repository.getFiltered(map, page)
             }
         }
     }

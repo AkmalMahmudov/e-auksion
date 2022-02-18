@@ -30,6 +30,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
     private val navController by lazy { findNavController() }
     private lateinit var adapter1: LotRecycler1Adapter
     private lateinit var adapter2: LotRecycler2Adapter
+    private lateinit var adapter3: LotRecycler2Adapter
     private var currentPage = 1
    private var currentPage2 = 1
 
@@ -56,60 +57,75 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 when (it.itemId) {
                     R.id.yangi -> {
                         t = true
+                        currentPage2=1
                         orderby_ = "start_time"
                         order_type = "0"
                         load(order_type,orderby_)
-                        adapter2.submitList(emptyList())
+                        adapter3.submitList(emptyList())
+                        viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.eski -> {
                         t = true
-
+                        currentPage2=1
                         orderby_ = "start_time"
                         order_type = "1"
                         load(order_type,orderby_)
-                        adapter2.submitList(emptyList())
+                        adapter3.submitList(emptyList())
+                        viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.qimmat -> {
                         t = true
+                        currentPage2=1
                         orderby_ = "start_price"
                         order_type = "0"
                         load(order_type,orderby_)
-                        adapter2.submitList(emptyList())
+                        adapter3.submitList(emptyList())
+                        viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.arzon -> {
                         t = true
+                        currentPage2=1
                         orderby_ = "start_price"
                         order_type = "1"
                         load(order_type,orderby_)
-                        adapter2.submitList(emptyList())
+                        adapter3.submitList(emptyList())
+                        viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.katta -> {
                         t = true
+                        currentPage2=1
                         orderby_ = "land_area"
                         order_type = "0"
                         load(order_type,orderby_)
-                        adapter2.submitList(emptyList())
+                        adapter3.submitList(emptyList())
+                        viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.kichik -> {
                         t = true
+                        currentPage2=1
                         orderby_ = "land_area"
                         order_type = "1"
                         load(order_type,orderby_)
-                        adapter2.submitList(emptyList())
+                        adapter3.submitList(emptyList())
+                        viewModel.orderBy(orderby_, order_type, 1)
                     }
                     R.id.kup -> {
                         t = true
+                        currentPage2=1
                         orderby_ = "view_count"
                         order_type = "0"
+                        viewModel.orderBy(orderby_, order_type, 1)
+                        adapter3.submitList(emptyList())
                         load(order_type,orderby_)
-                        adapter2.submitList(emptyList())
                     }
                     R.id.kam -> {
                         t = true
+                        currentPage2=1
                         orderby_ = "view_count"
                         order_type = "1"
+                        viewModel.orderBy(orderby_, order_type, 1)
+                        adapter3.submitList(emptyList())
                         load(order_type,orderby_)
-                        adapter2.submitList(emptyList())
                     }
                 }
                 t = true
@@ -117,34 +133,35 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             }
             menu.show()
         }
-//        adapter2.submitList(emptyList())
+//        adapter3.submitList(emptyList())
+
 
 
     }
     private fun load (order_type:String, orderby_:String) {
 
-
-
-        viewModel.orderBy(orderby_, order_type, currentPage2++)
         val scrollListener1 = object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                if (currentPage2 == 1 && dy <= 0) {
-                    viewModel.orderBy(orderby_, order_type, 1)
-                    currentPage2++
-                } else {
-                    if (layoutManager.findLastVisibleItemPosition() >= currentPage2 * 20 - 1) {
+//                if (currentPage2 == 1 && dy <= 0) {
+//                    viewModel.orderBy(orderby_, order_type, 1)
+//                    currentPage2++
+//                } else {
+                    if (layoutManager.findLastVisibleItemPosition() >= currentPage2 * 20 -2 ) {
                         viewModel.orderBy(orderby_, order_type, currentPage2)
+                        Log.d("mkm1", "onScrolled: $currentPage2 ")
                         currentPage2++
                     }
 
-                }
+//                }
             }
         }
-        binding.recycler2.addOnScrollListener(scrollListener1)
+        binding.recycler2.visibility=View.GONE
+        binding.recycler3.visibility=View.VISIBLE
+        binding.recycler3.addOnScrollListener(scrollListener1)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -182,9 +199,9 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 is CurrencyEvent.Success<*> -> {
                     binding.progressBar.isVisible = false
                     val list = it.data as LotsResponse
-                    val ls = adapter2.currentList.toMutableList()
+                    val ls = adapter3.currentList.toMutableList()
                     ls.addAll(list.shortLotBeans)
-                    adapter2.submitList(ls)
+                    adapter3.submitList(ls)
                 }
                 else -> {
                 }
@@ -195,6 +212,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
     private fun loadViews() {
         adapter1 = LotRecycler1Adapter()
         adapter2 = LotRecycler2Adapter()
+        adapter3 = LotRecycler2Adapter()
         binding.apply {
             back.setOnClickListener {
                 navController.navigateUp()
@@ -203,8 +221,11 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             recycler2.layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            recycler3.layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             recycler1.adapter = adapter1
             recycler2.adapter = adapter2
+            recycler3.adapter = adapter3
             recycler2.addOnScrollListener(this@DavActivsScreen.scrollListener)
         }
     }

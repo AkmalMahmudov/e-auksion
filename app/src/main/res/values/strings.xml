@@ -52,5 +52,12 @@
         <item>Ko\'p ko\'rilgan</item>
         <item>Kam ko\'rilgan</item>
     </string-array>
-
+<string name="yangi">Yangilaridan boshlab</string>
+<string name="eski">Eskilaridan boshlab</string>
+<string name="qimmat">Qimmatidan boshlab</string>
+<string name="arzon">Arzonidan boshlab</string>
+<string name="katta">Maydoni kattasidan</string>
+<string name="kichik">Maydoni kichigidan</string>
+<string name="kup">Ko\'p ko\'rilgan</string>
+<string name="kam">Kam ko\'rilgan</string>
 </resources>

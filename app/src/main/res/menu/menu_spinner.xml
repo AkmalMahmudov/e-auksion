@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/yangi"
+        android:title="@string/yangi" />
+    <item
+        android:id="@+id/eski"
+        android:title="@string/eski" />
+    <item
+        android:id="@+id/qimmat"
+        android:title="@string/qimmat" />
+    <item
+        android:id="@+id/arzon"
+        android:title="@string/arzon" />
+    <item
+        android:id="@+id/katta"
+        android:title="@string/katta" />
+    <item
+        android:id="@+id/kichik"
+        android:title="@string/kichik" />
+    <item
+        android:id="@+id/kup"
+        android:title="@string/kup" />
+    <item
+        android:id="@+id/kam"
+        android:title="@string/kam" />
+</menu>

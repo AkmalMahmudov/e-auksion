@@ -230,7 +230,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         }
     }
 
-//    private fun clickReceiver() {
+    private fun clickReceiver() {
 //        binding.sort.onItemSelectedListener = object : AdapterView.OnItemClickListener,
 //            AdapterView.OnItemSelectedListener {
 //            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -302,17 +302,17 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
 //            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 //            }
 //
-//        }
-//        binding.filter.setOnClickListener {
-//            navController.navigate(DavActivsScreenDirections.openFilterScreen())
-//        }
-//        adapter1.itemClickListener {
-//
-//        }
-//        adapter2.itemClickListener {
-//            navController.navigate(DavActivsScreenDirections.openItemScreen(it))
-//        }
-//    }
+
+        binding.filter.setOnClickListener {
+            navController.navigate(DavActivsScreenDirections.openFilterScreen())
+        }
+        adapter1.itemClickListener {
+
+        }
+        adapter2.itemClickListener {
+            navController.navigate(DavActivsScreenDirections.openItemScreen(it))
+        }
+    }
 
 
     private val scrollListener = object : RecyclerView.OnScrollListener() {

@@ -37,7 +37,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadViews()
-//        clickReceiver()
+        clickReceiver()
 
         viewModel.getAllLots(1)
         menu()

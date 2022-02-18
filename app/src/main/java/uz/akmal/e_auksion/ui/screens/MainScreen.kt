@@ -30,7 +30,7 @@ class MainScreen : Fragment(R.layout.fragment_main) {
                 "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=13e827bc5966e7419495d7ce4530547a8b058fb2",
                 "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=5b8ae0b97376b52ede4cf3abbfeef5c5c0d653b2",
                 "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=393bb25ba9c8c14685900a206ded9f72cefa63a5",
-                "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=43d1bd01f427b052d2e45208eae6a4b25905d4b5"
+                "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=6722927d632573d7734918729f4e158b89b1cd05"
             )
         )
         val adapterR = MainRecyclerAdapter(
@@ -121,6 +121,10 @@ class MainScreen : Fragment(R.layout.fragment_main) {
                 )
             ), width()
         )
+        val m1: MutableMap<Int, Int> = mutableMapOf(1 to 100, 2 to 100, 3 to 100)   // 1
+        val m2: Map<Int, Int> = m1
+
+
         binding.apply {
             viewPager.adapter = adapterVP
             dots.setViewPager2(viewPager)

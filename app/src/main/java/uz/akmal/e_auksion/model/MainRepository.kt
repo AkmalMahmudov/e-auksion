@@ -79,6 +79,7 @@ class MainRepository @Inject constructor(private val api: ApiService) {
         return try {
             val response = api.getFiltered(request)
             val result = response.body()
+            Log.d("AABB", result?.shortLotBeans?.get(1)?.name.toString())
             if (response.isSuccessful && result != null) {
                 CurrencyEvent.Success(result)
             } else {

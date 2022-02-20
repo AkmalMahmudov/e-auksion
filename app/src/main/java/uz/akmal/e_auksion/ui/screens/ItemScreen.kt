@@ -21,7 +21,6 @@ import uz.akmal.e_auksion.viewmodel.MainViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 @AndroidEntryPoint
 class ItemScreen : Fragment(R.layout.fragment_lot_datas) {
     private val binding by viewBinding(FragmentLotDatasBinding::bind)

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import uz.akmal.e_auksion.R
 import uz.akmal.e_auksion.app.App
 import uz.akmal.e_auksion.databinding.ItemViewpagerBinding
@@ -20,9 +21,8 @@ class VPAdapter(private val list: List<String>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(App().getContext()).load(list[position])
-            .placeholder(R.drawable.image_placeholder).into(holder.binding.image)
-
+        Glide.with(App().getContext()).load(list[position]).diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true).placeholder(R.drawable.image_placeholder).into(holder.binding.image)
     }
 
     override fun getItemCount() = list.size

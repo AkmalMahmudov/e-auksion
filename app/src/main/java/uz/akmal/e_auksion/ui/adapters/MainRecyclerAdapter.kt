@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import uz.akmal.e_auksion.R
 import uz.akmal.e_auksion.databinding.ItemRecyclerBinding
 import uz.akmal.e_auksion.model.recyclerData.MainRvData
@@ -17,7 +18,6 @@ class MainRecyclerAdapter(private val list: List<MainRvData>, private val width:
         itemClickListener = block
     }
 
-
     inner class ViewHolder(private val binding: ItemRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
@@ -25,7 +25,7 @@ class MainRecyclerAdapter(private val list: List<MainRvData>, private val width:
                 card.layoutParams.width = width
                 card.layoutParams.height = width
                 name.text = list[position].name
-                Glide.with(root.context).load(list[position].url)
+                Glide.with(root.context).load(list[position].url).diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(R.drawable.image_placeholder).into(image)
             }
         }

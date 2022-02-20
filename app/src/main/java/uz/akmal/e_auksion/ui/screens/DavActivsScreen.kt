@@ -43,8 +43,6 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         loadViews()
         clickReceiver()
 
-
-
         menu()
         if (navArgs.isFilter) {
             adapter2.submitList(emptyList())
@@ -61,7 +59,6 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             if (navArgs.area != 0) {
                 map["areas_id"] = "${navArgs.region}"
             }
-
 
             viewModel.sortByFilter(map, currentPage3)
             val scrollListener = object : RecyclerView.OnScrollListener() {
@@ -83,11 +80,10 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 }
             }
             binding.recycler2.addOnScrollListener(scrollListener)
-        }else{
+        } else {
             viewModel.getAllLots(1)
         }
         observe()
-
     }
 
     private fun menu() {
@@ -179,8 +175,6 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             menu.show()
         }
 //        adapter3.submitList(emptyList())
-
-
     }
 
     private fun load(order_type: String, orderby_: String) {
@@ -228,8 +222,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     adapter2.notifyDataSetChanged()
                     adapter2.submitList(ls)
                 }
-                else -> {
-                }
+                else -> {}
             }
         }
         viewModel.orderByLots.observe(viewLifecycleOwner) {
@@ -248,8 +241,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     ls.addAll(list.shortLotBeans)
                     adapter3.submitList(ls)
                 }
-                else -> {
-                }
+                else -> {}
             }
         }
         viewModel.filteredList.observe(viewLifecycleOwner) {
@@ -268,8 +260,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     ls.addAll(list.shortLotBeans)
                     adapter2.submitList(ls)
                 }
-                else -> {
-                }
+                else -> {}
             }
         }
     }
@@ -369,7 +360,9 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
 //
 
         binding.filter.setOnClickListener {
-            navController.navigate(DavActivsScreenDirections.openFilterScreen())
+            navController.navigate(
+                DavActivsScreenDirections.openFilterScreen()
+            )
         }
         adapter1.itemClickListener {
 
@@ -377,8 +370,10 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         adapter2.itemClickListener {
             navController.navigate(DavActivsScreenDirections.openItemScreen(it))
         }
+        adapter3.itemClickListener {
+            navController.navigate(DavActivsScreenDirections.openItemScreen(it))
+        }
     }
-
 
     private val scrollListener = object : RecyclerView.OnScrollListener() {
 

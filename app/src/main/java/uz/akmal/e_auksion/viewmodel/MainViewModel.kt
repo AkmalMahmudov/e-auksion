@@ -88,7 +88,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
         }
     }
 
-    fun sortByFilter(map:Map<String, String>, page:Int) {
+    fun sortByFilter(map: Map<String, String>, page: Int) {
         CoroutineScope(Dispatchers.IO).launch {
 
             _getFiltered.postValue(CurrencyEvent.Loading)

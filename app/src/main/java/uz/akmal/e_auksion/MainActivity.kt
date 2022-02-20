@@ -1,8 +1,7 @@
 package uz.akmal.e_auksion
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import dagger.hilt.EntryPoint
+import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

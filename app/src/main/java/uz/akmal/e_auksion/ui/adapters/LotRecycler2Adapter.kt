@@ -1,11 +1,11 @@
 package uz.akmal.e_auksion.ui.adapters
 
 import android.annotation.SuppressLint
-import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import uz.akmal.e_auksion.databinding.ItemLotRecycler2Binding
 import uz.akmal.e_auksion.model.data.response.allLots.ShortLotBean
 
@@ -13,7 +13,7 @@ class LotRecycler2Adapter :
     androidx.recyclerview.widget.ListAdapter<ShortLotBean, LotRecycler2Adapter.ViewHolder>(
         ShortLotBean.ITEM_CALLBACK
     ) {
-//    private var currentData = emptyList<ShortLotBean>()
+    //    private var currentData = emptyList<ShortLotBean>()
     var itemClickListener: ((String) -> Unit)? = null
     fun itemClickListener(block: (String) -> Unit) {
         itemClickListener = block
@@ -26,7 +26,8 @@ class LotRecycler2Adapter :
             binding.apply {
                 val url =
                     "https://files.e-auksion.uz/files-worker/api/v1/images?file_hash=${getItem(position).file_hash}&from_mobile=1"
-                Glide.with(root.context).load(url).centerCrop().into(image)
+                Glide.with(root.context).load(url).diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true).centerCrop().into(image)
 //                name.isSelected = true
 //                name.movementMethod = ScrollingMovementMethod()
                 name.text = getItem(position).name
@@ -45,11 +46,7 @@ class LotRecycler2Adapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemLotRecycler2Binding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+            ItemLotRecycler2Binding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 

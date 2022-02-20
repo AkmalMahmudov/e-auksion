@@ -28,23 +28,23 @@
         <argument
             android:name="is_filter"
             android:defaultValue="false"
-            app:argType="boolean"/>
+            app:argType="boolean" />
         <argument
             android:name="group"
             android:defaultValue="-1"
-            app:argType="integer"/>
+            app:argType="integer" />
         <argument
             android:name="category"
             android:defaultValue="-1"
-            app:argType="integer"/>
+            app:argType="integer" />
         <argument
             android:name="region"
             android:defaultValue="-1"
-            app:argType="integer"/>
+            app:argType="integer" />
         <argument
             android:name="area"
             android:defaultValue="-1"
-            app:argType="integer"/>
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -64,7 +64,7 @@
         tools:layout="@layout/fragment_lot_datas">
         <argument
             android:name="lot_id"
-            app:argType="string"/>
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/filterScreen"

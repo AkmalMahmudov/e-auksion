@@ -8,6 +8,7 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -42,6 +43,13 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         super.onViewCreated(view, savedInstanceState)
         loadViews()
         clickReceiver()
+
+        binding.swipeRefresh.setOnRefreshListener {
+            val ftr: FragmentTransaction = parentFragmentManager.beginTransaction()
+            ftr.detach(this)
+            ftr.attach(this).commit()
+            binding.swipeRefresh.isRefreshing = false
+        }
 
         menu()
         if (navArgs.isFilter) {

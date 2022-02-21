@@ -14,7 +14,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scope.launch {
-            delay(1000)
+            delay(2000)
             navController.navigate(SplashFragmentDirections.openMainScreen())
         }
     }

@@ -17,20 +17,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <!--        android:ellipsize="marquee"-->
-    <!--        android:scrollbars="horizontal"-->
-    <!--        android:focusable="true"-->
-    <!--        android:focusableInTouchMode="true"-->
-    <!--        android:marqueeRepeatLimit="marquee_forever"-->
-    <!--        android:scrollHorizontally="true"-->
-    <!--        android:singleLine="true"-->
 
     <TextView
         android:id="@+id/name"
         android:layout_width="200dp"
         android:layout_height="24dp"
         android:layout_marginStart="12dp"
-        android:text="Mustaqillik shaxobchasi"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/line"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -45,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:text="12345678"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@id/name"
         app:layout_constraintRight_toRightOf="parent"
@@ -66,7 +57,7 @@
         android:id="@+id/zakalat_pul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Zakalat pul miqdori"
+        android:text="@string/zaklat_pul_miqdori"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@id/zakalat_price"
@@ -77,7 +68,6 @@
         android:id="@+id/zakalat_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="13 979 200.0 UZS"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/image"
@@ -88,7 +78,7 @@
         android:id="@+id/boshlangich_narx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Boshlang'ich narxi"
+        android:text="@string/boshlang_ich_narxi"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintRight_toRightOf="@id/id"
@@ -98,7 +88,6 @@
         android:id="@+id/boshlangich_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="279 584 000.0 UZS"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintRight_toRightOf="@id/id"

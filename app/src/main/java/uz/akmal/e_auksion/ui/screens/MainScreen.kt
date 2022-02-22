@@ -115,9 +115,7 @@ class MainScreen : Fragment(R.layout.fragment_main) {
         }
 
         adapterR.itemClickListener {
-            if (it == 0) {
-                navController.navigate(MainScreenDirections.openDavActivsScreen())
-            }
+            navController.navigate(MainScreenDirections.openDavActivsScreen())
         }
     }
 

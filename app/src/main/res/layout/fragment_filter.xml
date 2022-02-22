@@ -76,54 +76,41 @@
                 android:id="@+id/edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:autofillHints="Lot №"
                 android:background="@null"
                 android:hint="@string/lot"
                 android:inputType="numberDecimal"
+                android:padding="16dp"
                 android:paddingVertical="16dp"
                 app:layout_constraintTop_toBottomOf="@id/filtrlar" />
 
-            <Spinner
-                android:id="@+id/groups"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/bg_spinner"
-                android:entries="@array/davlat_aktivlari"
-                android:paddingVertical="16dp"
-                app:layout_constraintTop_toBottomOf="@id/edittext" />
+            <TextView
+                android:id="@+id/groups_text"
+                style="@style/select_text_style"
+                android:text="@string/davlat_aktivlari"
+                app:layout_constraintTop_toBottomOf="@id/edittext"
+                tools:ignore="MissingConstraints" />
 
-            <Spinner
-                android:id="@+id/category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/bg_spinner"
-                android:entries="@array/Mol_mulk_toifasi"
-                android:paddingVertical="16dp"
-                app:layout_constraintTop_toBottomOf="@id/groups" />
+            <TextView
+                android:id="@+id/category_text"
+                style="@style/select_text_style"
+                android:text="@string/mol_mulk_toifasi"
+                app:layout_constraintTop_toBottomOf="@id/groups_text"
+                tools:ignore="MissingConstraints" />
 
-            <Spinner
-                android:id="@+id/region"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/bg_spinner"
-                android:entries="@array/viloyat"
-                android:paddingVertical="16dp"
-                app:layout_constraintTop_toBottomOf="@id/category" />
+            <TextView
+                android:id="@+id/region_text"
+                style="@style/select_text_style"
+                android:text="@string/viloyat"
+                app:layout_constraintTop_toBottomOf="@id/category_text"
+                tools:ignore="MissingConstraints" />
 
-            <Spinner
-                android:id="@+id/area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/bg_spinner"
-                android:entries="@array/tuman"
-                android:paddingVertical="16dp"
-                app:layout_constraintTop_toBottomOf="@id/region"
-                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/area_text"
+                style="@style/select_text_style"
+                android:text="@string/tuman"
+                app:layout_constraintTop_toBottomOf="@id/region_text"
+                tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

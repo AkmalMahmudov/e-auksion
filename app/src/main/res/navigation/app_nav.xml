@@ -30,6 +30,10 @@
             android:defaultValue="false"
             app:argType="boolean" />
         <argument
+            android:name="lot"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
             android:name="group"
             android:defaultValue="-1"
             app:argType="integer" />

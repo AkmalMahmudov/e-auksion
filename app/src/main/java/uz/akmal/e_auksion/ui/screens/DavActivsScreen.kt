@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -55,6 +54,9 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         if (navArgs.isFilter) {
             adapter2.submitList(emptyList())
             val map = mutableMapOf<String, String>()
+            if (navArgs.lot != 0) {
+                map["lot_number"] = "${navArgs.lot}"
+            }
             if (navArgs.group != 0) {
                 map["confiscant_groups_id"] = "${navArgs.group}"
             }
@@ -211,12 +213,13 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         binding.recycler3.addOnScrollListener(scrollListener1)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     private fun observe() {
         viewModel.getAllLots.observe(viewLifecycleOwner) {
             when (it) {
                 is CurrencyEvent.Failure -> {
                     Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
+                    binding.progressBar.isVisible = false
                 }
                 is CurrencyEvent.Loading -> {
                     binding.progressBar.isVisible = true
@@ -224,7 +227,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 is CurrencyEvent.Success<*> -> {
                     binding.progressBar.isVisible = false
                     val list = it.data as LotsResponse
-                    Toast.makeText(context, list.result_msg, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, list.result_msg, Toast.LENGTH_SHORT).show()
                     val ls = adapter2.currentList.toMutableList()
                     ls.addAll(list.shortLotBeans)
                     adapter2.notifyDataSetChanged()
@@ -238,6 +241,7 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             when (it) {
                 is CurrencyEvent.Failure -> {
                     Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
+                    binding.progressBar.isVisible = false
                 }
                 is CurrencyEvent.Loading -> {
                     binding.progressBar.isVisible = true
@@ -253,10 +257,16 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             }
         }
         viewModel.filteredList.observe(viewLifecycleOwner) {
-
             when (it) {
                 is CurrencyEvent.Failure -> {
                     Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
+                    binding.apply {
+                        status.text = "Hech narsa topilmadi"
+                        status.visibility = View.VISIBLE
+                        placeHolder.setImageResource(R.drawable.empty)
+                        placeHolder.visibility = View.VISIBLE
+                    }
+                    binding.progressBar.isVisible = false
                 }
                 is CurrencyEvent.Loading -> {
                     binding.progressBar.isVisible = true

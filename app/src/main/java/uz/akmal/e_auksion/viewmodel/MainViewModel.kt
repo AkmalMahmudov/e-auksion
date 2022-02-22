@@ -47,7 +47,6 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
             _getOrderByLots.postValue(CurrencyEvent.Loading)
             viewModelScope.launch {
                 _getOrderByLots.value = repository.getOrderByLots(orderby_, order_type, page)
-
             }
         }
     }
@@ -90,7 +89,6 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
 
     fun sortByFilter(map: Map<String, String>, page: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-
             _getFiltered.postValue(CurrencyEvent.Loading)
             viewModelScope.launch {
                 _getFiltered.value = repository.getFiltered(map, page)

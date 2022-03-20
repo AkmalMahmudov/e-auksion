@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = binding.drawerLayout
         binding.navDrawer.setupWithNavController(navController)
     }
+
     fun openDrawer() {
         if (binding.drawerLayout.isOpen) {
             binding.drawerLayout.close()

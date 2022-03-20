@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import uz.akmal.e_auksion.MainActivity
 import uz.akmal.e_auksion.R
 import uz.akmal.e_auksion.databinding.FragmentMainBinding
 import uz.akmal.e_auksion.model.recyclerData.MainRvData
@@ -109,9 +110,11 @@ class MainScreen : Fragment(R.layout.fragment_main) {
             viewPager.adapter = adapterVP
             dots.setViewPager2(viewPager)
             viewPager.offscreenPageLimit = 3
-
             recycler.adapter = adapterR
             recycler.layoutManager = GridLayoutManager(requireActivity(), 2)
+            menu.setOnClickListener {
+                (activity as MainActivity).openDrawer()
+            }
         }
 
         adapterR.itemClickListener {

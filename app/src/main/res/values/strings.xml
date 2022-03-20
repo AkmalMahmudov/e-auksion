@@ -30,4 +30,13 @@
     <string name="tuman">Tuman</string>
     <string name="zaklat_pul_miqdori">Zaklat pul miqdori</string>
     <string name="boshlang_ich_narxi">Boshlang\'ich narxi</string>
+    <string name="xabarnomalar">Xabarnomalar</string>
+    <string name="yakunlangan_auksionlar">Yakunlangan auksionlar</string>
+    <string name="sozlamalar">Sozlamalar</string>
+    <string name="bog_lanish">Bog\'lanish</string>
+    <string name="faq">FAQ</string>
+    <string name="chiqish">Chiqish</string>
+    <string name="autorizatsiyadan_n_o_tilmagan">Autorizatsiyadan \no\'tilmagan</string>
+    <string name="kirish">Kirish</string>
+    <string name="o_tkazilmagan_nauksionlar">O\'tkazilmagan\nauksionlar</string>
 </resources>

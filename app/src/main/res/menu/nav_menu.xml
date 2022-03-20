@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item1"
+        android:icon="@drawable/ic_outline_notifications_active_24"
+        android:title="@string/xabarnomalar" />
+    <item
+        android:id="@+id/item2"
+        android:icon="@drawable/ic_baseline_hourglass_bottom_24"
+        android:title="@string/yakunlangan_auksionlar" />
+    <item
+        android:id="@+id/item3"
+        android:icon="@drawable/ic_baseline_cancel_presentation_24"
+        android:title="@string/o_tkazilmagan_nauksionlar" />
+    <item
+        android:id="@+id/item4"
+        android:icon="@drawable/ic_outline_settings_24"
+        android:title="@string/sozlamalar" />
+    <item
+        android:id="@+id/item5"
+        android:icon="@drawable/ic_outline_contacts_24"
+        android:title="@string/bog_lanish" />
+    <item
+        android:id="@+id/item6"
+        android:icon="@drawable/ic_help"
+        android:title="@string/faq" />
+    <item
+        android:id="@+id/item7"
+        android:icon="@drawable/ic_exit"
+        android:title="@string/chiqish" />
+</menu>

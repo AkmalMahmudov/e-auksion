@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -23,6 +23,7 @@ import uz.akmal.e_auksion.model.data.response.filters.FiltersResponse
 import uz.akmal.e_auksion.ui.adapters.LotRecycler1Adapter
 import uz.akmal.e_auksion.ui.adapters.LotRecycler2Adapter
 import uz.akmal.e_auksion.uitl.CurrencyEvent
+import uz.akmal.e_auksion.uitl.EventBus
 import uz.akmal.e_auksion.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -33,66 +34,123 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
     private lateinit var adapter1: LotRecycler1Adapter
     private lateinit var adapter2: LotRecycler2Adapter
     private lateinit var adapter3: LotRecycler2Adapter
-    private val navArgs: DavActivsScreenArgs by navArgs()
+
+    //    private val navArgs: DavActivsScreenArgs by navArgs()
     private var currentPage = 1
     private var currentPage2 = 1
     private var currentPage3 = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadViews()
-        clickReceiver()
-
         binding.swipeRefresh.setOnRefreshListener {
             val ftr: FragmentTransaction = parentFragmentManager.beginTransaction()
             ftr.detach(this)
             ftr.attach(this).commit()
             binding.swipeRefresh.isRefreshing = false
         }
-
+        loadViews()
+        clickReceiver()
         menu()
-        if (navArgs.isFilter) {
-            adapter2.submitList(emptyList())
-            val map = mutableMapOf<String, String>()
-            if (navArgs.lot != 0) {
-                map["lot_number"] = "${navArgs.lot}"
-            }
-            if (navArgs.group != 0) {
-                map["confiscant_groups_id"] = "${navArgs.group}"
-            }
-            if (navArgs.category != 0) {
-                map["confiscant_categories_id"] = "${navArgs.category}"
-            }
-            if (navArgs.region != 0) {
-                map["regions_id"] = "${navArgs.region}"
-            }
-            if (navArgs.area != 0) {
-                map["areas_id"] = "${navArgs.region}"
-            }
 
-            viewModel.sortByFilter(map, currentPage3)
-            val scrollListener = object : RecyclerView.OnScrollListener() {
+        Snackbar.make(binding.root, "worked", Snackbar.LENGTH_SHORT).show()
+        EventBus.isFilterLiveData.observe(viewLifecycleOwner) { filtered ->
+            if (filtered) {
+                adapter2.submitList(emptyList())
+                val map = mutableMapOf<String, String>()
+                EventBus.lotLiveData.observe(viewLifecycleOwner) { lot ->
+                    if (lot != 0L) {
+                        map["lot_number"] = "$lot"
+                    }
+                }
+                EventBus.groupLiveData.observe(viewLifecycleOwner) { group ->
+                    if (group != 0) {
+                        map["confiscant_groups_id"] = "$group"
+                        Toast.makeText(context, "group: $group", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                EventBus.categoryLiveData.observe(viewLifecycleOwner) { category ->
+                    if (category != 0) {
+                        map["confiscant_categories_id"] = "$category"
+                    }
+                }
+                EventBus.regionLiveData.observe(viewLifecycleOwner) { region ->
+                    if (region != 0) {
+                        map["regions_id"] = "$region"
+                        Toast.makeText(context, "region: $region", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                EventBus.areaLiveData.observe(viewLifecycleOwner) { area ->
+                    if (area != 0) {
+                        map["areas_id"] = "$area"
+                    }
+                }
 
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
+                viewModel.sortByFilter(map, currentPage3)
+                val scrollListener = object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
 
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                    if (currentPage3 == 1 && dy <= 0) {
-                        viewModel.sortByFilter(map, currentPage3)
-                        currentPage3++
-                    } else {
-                        if (layoutManager.findLastVisibleItemPosition() >= currentPage3 * 20 - 1) {
+                        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                        if (currentPage3 == 1 && dy <= 0) {
                             viewModel.sortByFilter(map, currentPage3)
                             currentPage3++
-                            Log.d("mkm", "onScrolled: $currentPage3 ")
+                        } else {
+                            if (layoutManager.findLastVisibleItemPosition() >= currentPage3 * 20 - 1) {
+                                viewModel.sortByFilter(map, currentPage3)
+                                currentPage3++
+                                Log.d("mkm", "onScrolled: $currentPage3 ")
+                            }
                         }
                     }
                 }
+                binding.recycler2.addOnScrollListener(scrollListener)
+            } else {
+                viewModel.getAllLots(1)
             }
-            binding.recycler2.addOnScrollListener(scrollListener)
-        } else {
-            viewModel.getAllLots(1)
         }
+        /*   if (navArgs.isFilter) {
+               adapter2.submitList(emptyList())
+               val map = mutableMapOf<String, String>()
+               if (navArgs.lot != 0L) {
+                   map["lot_number"] = "${navArgs.lot}"
+               }
+               if (navArgs.group != 0) {
+                   map["confiscant_groups_id"] = "${navArgs.group}"
+               }
+               if (navArgs.category != 0) {
+                   map["confiscant_categories_id"] = "${navArgs.category}"
+               }
+               if (navArgs.region != 0) {
+                   map["regions_id"] = "${navArgs.region}"
+               }
+               if (navArgs.area != 0) {
+                   map["areas_id"] = "${navArgs.region}"
+               }
+
+               viewModel.sortByFilter(map, currentPage3)
+               val scrollListener = object : RecyclerView.OnScrollListener() {
+
+                   override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                       super.onScrolled(recyclerView, dx, dy)
+
+                       val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                       if (currentPage3 == 1 && dy <= 0) {
+                           viewModel.sortByFilter(map, currentPage3)
+                           currentPage3++
+                       } else {
+                           if (layoutManager.findLastVisibleItemPosition() >= currentPage3 * 20 - 1) {
+                               viewModel.sortByFilter(map, currentPage3)
+                               currentPage3++
+                               Log.d("mkm", "onScrolled: $currentPage3 ")
+                           }
+                       }
+                   }
+               }
+               binding.recycler2.addOnScrollListener(scrollListener)
+           } else {
+               viewModel.getAllLots(1)
+           }
+         */
         observe()
     }
 
@@ -185,6 +243,8 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             menu.show()
         }
 //        adapter3.submitList(emptyList())
+
+
     }
 
     private fun load(order_type: String, orderby_: String) {
@@ -213,13 +273,12 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
         binding.recycler3.addOnScrollListener(scrollListener1)
     }
 
-    @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
+    @SuppressLint("NotifyDataSetChanged")
     private fun observe() {
         viewModel.getAllLots.observe(viewLifecycleOwner) {
             when (it) {
                 is CurrencyEvent.Failure -> {
                     Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
-                    binding.progressBar.isVisible = false
                 }
                 is CurrencyEvent.Loading -> {
                     binding.progressBar.isVisible = true
@@ -227,13 +286,14 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 is CurrencyEvent.Success<*> -> {
                     binding.progressBar.isVisible = false
                     val list = it.data as LotsResponse
-//                    Toast.makeText(context, list.result_msg, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, list.result_msg, Toast.LENGTH_SHORT).show()
                     val ls = adapter2.currentList.toMutableList()
                     ls.addAll(list.shortLotBeans)
                     adapter2.notifyDataSetChanged()
                     adapter2.submitList(ls)
                 }
-                else -> {}
+                else -> {
+                }
             }
         }
         viewModel.orderByLots.observe(viewLifecycleOwner) {
@@ -241,7 +301,6 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
             when (it) {
                 is CurrencyEvent.Failure -> {
                     Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
-                    binding.progressBar.isVisible = false
                 }
                 is CurrencyEvent.Loading -> {
                     binding.progressBar.isVisible = true
@@ -253,20 +312,14 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     ls.addAll(list.shortLotBeans)
                     adapter3.submitList(ls)
                 }
-                else -> {}
+                else -> {
+                }
             }
         }
         viewModel.filteredList.observe(viewLifecycleOwner) {
             when (it) {
                 is CurrencyEvent.Failure -> {
                     Snackbar.make(binding.root, it.errorText, Snackbar.LENGTH_SHORT).show()
-                    binding.apply {
-                        status.text = "Hech narsa topilmadi"
-                        status.visibility = View.VISIBLE
-                        placeHolder.setImageResource(R.drawable.empty)
-                        placeHolder.visibility = View.VISIBLE
-                    }
-                    binding.progressBar.isVisible = false
                 }
                 is CurrencyEvent.Loading -> {
                     binding.progressBar.isVisible = true
@@ -278,7 +331,8 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                     ls.addAll(list.shortLotBeans)
                     adapter2.submitList(ls)
                 }
-                else -> {}
+                else -> {
+                }
             }
         }
     }
@@ -378,17 +432,12 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
 //
 
         binding.filter.setOnClickListener {
-            navController.navigate(
-                DavActivsScreenDirections.openFilterScreen()
-            )
+            navController.navigate(DavActivsScreenDirections.openFilterScreen())
         }
         adapter1.itemClickListener {
 
         }
         adapter2.itemClickListener {
-            navController.navigate(DavActivsScreenDirections.openItemScreen(it))
-        }
-        adapter3.itemClickListener {
             navController.navigate(DavActivsScreenDirections.openItemScreen(it))
         }
     }
@@ -410,5 +459,10 @@ class DavActivsScreen : Fragment(R.layout.fragment_dav_activs) {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.isFilterLiveData.value = false
     }
 }

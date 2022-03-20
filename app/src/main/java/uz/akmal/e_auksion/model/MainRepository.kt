@@ -8,7 +8,7 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(private val api: ApiService) {
 
     suspend fun getFullLots(page: Int): CurrencyEvent {
-        val request = AllLotsRequest(5, page.toString(), 0, "uz", "1.3.5")
+        val request = AllLotsRequest(5, page.toString(), 0, "uz", "1.3.7")
         return try {
             val response = api.getAllLots(request)
             val result = response.body()
@@ -40,7 +40,7 @@ class MainRepository @Inject constructor(private val api: ApiService) {
     suspend fun getOrderByLots(orderby_: String, order_type: String, page: Int): CurrencyEvent {
         Log.d("TTT", "request: $orderby_ : $order_type")
         val request =
-            OrderByRequest(5, "$page", OrderByMap(orderby_, order_type), 0, "uz", "1.3.5")
+            OrderByRequest(5, "$page", OrderByMap(orderby_, order_type), 0, "uz", "1.3.7")
         return try {
             val response = api.getOrderByLots(request)
             val result = response.body()
@@ -56,7 +56,7 @@ class MainRepository @Inject constructor(private val api: ApiService) {
     }
 
     suspend fun getFiltersList(): CurrencyEvent {
-        val request = FiltersListRequest(7, 0, "uz", "1.3.5")
+        val request = FiltersListRequest(7, 0, "uz", "1.3.7")
         return try {
             val response = api.getFiltersList(request)
             val result = response.body()
@@ -73,7 +73,7 @@ class MainRepository @Inject constructor(private val api: ApiService) {
     suspend fun  getFiltered(map:Map<String, String>, page:Int): CurrencyEvent {
         val request = FiltersRequest(
             5, "1",map,
-            0, "uz", "1.3.5"
+            0, "uz", "1.3.7"
         )
         return try {
             val response = api.getFiltered( request)

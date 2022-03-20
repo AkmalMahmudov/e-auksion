@@ -70,7 +70,7 @@ class ItemScreen : Fragment(R.layout.fragment_lot_datas) {
                         lotName.text = item.name
                         lotNumber.text = "№ ${item.lot_number}"
                         amount.text = item.zaklad_summa.toString()
-                        startAmount.text = item.start_price.toString()
+                        startAmount.text = item.current_price.toString()
                         isFavourite.text = item.is_favourite.toString()
                         favourite.text = item.count_favourite.toString()
                         view.text = item.view_count.toString()

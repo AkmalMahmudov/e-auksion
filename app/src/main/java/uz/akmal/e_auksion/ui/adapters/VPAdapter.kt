@@ -21,7 +21,7 @@ class VPAdapter(private val list: List<String>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(App().getContext()).load(list[position]).diskCacheStrategy(DiskCacheStrategy.NONE)
+        Glide.with(holder.binding.root).load(list[position]).diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true).placeholder(R.drawable.image_placeholder).into(holder.binding.image)
     }
 

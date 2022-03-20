@@ -6,5 +6,5 @@ data class OrderByRequest(
     val filters_map: OrderByMap,
     val is_gzipped: Int = 0,
     val language: String = "uz",
-    val version: String = "1.3.5"
+    val version: String = "1.3.7"
 )

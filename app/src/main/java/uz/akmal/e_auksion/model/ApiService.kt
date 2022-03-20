@@ -3,7 +3,6 @@ package uz.akmal.e_auksion.model
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
-import retrofit2.http.QueryMap
 import uz.akmal.e_auksion.model.data.request.*
 import uz.akmal.e_auksion.model.data.response.LotItemResponse
 import uz.akmal.e_auksion.model.data.response.allLots.LotsResponse

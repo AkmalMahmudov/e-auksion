@@ -15,6 +15,12 @@ import uz.akmal.e_auksion.R
 import uz.akmal.e_auksion.databinding.FragmentFilterBinding
 import uz.akmal.e_auksion.model.data.response.filtersList.FiltersListResponse
 import uz.akmal.e_auksion.uitl.CurrencyEvent
+import uz.akmal.e_auksion.uitl.EventBus.areaLiveData
+import uz.akmal.e_auksion.uitl.EventBus.categoryLiveData
+import uz.akmal.e_auksion.uitl.EventBus.groupLiveData
+import uz.akmal.e_auksion.uitl.EventBus.isFilterLiveData
+import uz.akmal.e_auksion.uitl.EventBus.lotLiveData
+import uz.akmal.e_auksion.uitl.EventBus.regionLiveData
 import uz.akmal.e_auksion.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -23,7 +29,7 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
     private val navController by lazy { findNavController() }
     private val viewModel: MainViewModel by viewModels()
 
-    private var lotNumber = 0
+    private var lotNumber: Long = 0
     private var groupNumber = 0
     private var categoryNumber = 0
     private var regionNumber = 0
@@ -122,10 +128,10 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
             }
             izlash.setOnClickListener {
                 if (edittext.text.isNotEmpty()) {
-                    lotNumber = binding.edittext.text.toString().toInt()
+                    lotNumber = binding.edittext.text.toString().toLong()
                 }
                 val map = mutableMapOf<String, String>()
-                if (lotNumber != 0) {
+                if (lotNumber.toString().isNotEmpty()) {
                     map["lot_number"] = "$lotNumber"
                 }
                 if (groupNumber != 0) {
@@ -143,15 +149,13 @@ class FilterScreen : Fragment(R.layout.fragment_filter) {
 
                 val page = 1
                 viewModel.sortByFilter(map, page)
-                Log.d(
-                    "map",
-                    "clickReceiver: map ${map["regions_id"]} ${map["confiscant_categories_id"]} ${map["areas_id"]} ${map["confiscant_groups_id"]}"
-                )
-                navController.navigate(
-                    FilterScreenDirections.actionFilterScreenToDavActivsScreen(
-                        true, lotNumber, groupNumber, categoryNumber, regionNumber, areaNumber
-                    )
-                )
+                isFilterLiveData.postValue(true)
+//                lotLiveData.postValue(lotNumber)
+//                groupLiveData.postValue(groupNumber)
+//                categoryLiveData.postValue(categoryNumber)
+//                regionLiveData.postValue(regionNumber)
+//                areaLiveData.postValue(areaNumber)
+                navController.navigateUp()
             }
 
             groupsText.setOnClickListener {

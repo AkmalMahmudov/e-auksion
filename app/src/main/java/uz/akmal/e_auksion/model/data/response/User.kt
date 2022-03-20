@@ -23,5 +23,6 @@ data class User(
     val pinfl: String,
     val region_name: String,
     val sex: Int,
-    val subject_type: Int
+    val subject_type: Int,
+    val two_step_verification: Int
 )

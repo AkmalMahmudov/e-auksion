@@ -6,5 +6,5 @@ data class SimpleDataRequest(
     val is_gzipped: Int = 0,
     val language: String = "uz",
     val currentPage: Int = 16,
-    val version: String = "1.3.5"
+    val version: String = "1.3.7"
 )

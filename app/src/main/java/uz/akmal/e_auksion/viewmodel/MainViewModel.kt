@@ -16,8 +16,10 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
     private var _getAllLots = MutableLiveData<CurrencyEvent>()
     val getAllLots: LiveData<CurrencyEvent> get() = _getAllLots
+
     private var _getOrderByLots = MutableLiveData<CurrencyEvent>()
     val orderByLots: LiveData<CurrencyEvent> get() = _getOrderByLots
+
     private var _getLotItem = MutableLiveData<CurrencyEvent>()
     val getLotItem: LiveData<CurrencyEvent> get() = _getLotItem
 
@@ -32,6 +34,14 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
 
     private var _getFiltered = MutableLiveData<CurrencyEvent>()
     val filteredList: LiveData<CurrencyEvent> get() = _getFiltered
+
+//    var isFilterLiveData = MutableLiveData(false)
+//    var lotLiveData = MutableLiveData<Long>(-1)
+//    var groupLiveData = MutableLiveData(-1)
+//    var categoryLiveData = MutableLiveData(-1)
+//    var regionLiveData = MutableLiveData(-1)
+//    var areaLiveData = MutableLiveData(-1)
+
 
     fun getAllLots(page: Int) {
         CoroutineScope(Dispatchers.IO).launch {

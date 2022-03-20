@@ -6,5 +6,5 @@ data class LotItemRequest(
     val is_view: String="true",
     val language: String="uz",
     val lot_id: String,
-    val version: String="1.3.5"
+    val version: String="1.3.7"
 )

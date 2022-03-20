@@ -53,16 +53,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <!--            <Spinner-->
-                    <!--                android:id="@+id/sort"-->
-                    <!--                android:layout_width="20dp"-->
-                    <!--                android:layout_height="16dp"-->
-                    <!--                android:layout_marginEnd="24dp"-->
-                    <!--                android:background="@drawable/ic_sort"-->
-                    <!--                android:entries="@array/sort"-->
-                    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                app:layout_constraintEnd_toStartOf="@id/filter"-->
-                    <!--                app:layout_constraintTop_toTopOf="parent" />-->
                     <ImageView
                         android:id="@+id/menu_spinner"
                         android:layout_width="20dp"
